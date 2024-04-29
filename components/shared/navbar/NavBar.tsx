@@ -22,9 +22,6 @@ const NavBar = () => {
       </Link>
       {/* <GlobalSearch /> */}
       <div className="flex-between gap-5">
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
         <SignedIn>
           <UserButton
             afterSignOutUrl="/"
