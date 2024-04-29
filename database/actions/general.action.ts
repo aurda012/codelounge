@@ -1,11 +1,11 @@
 "use server";
 
-import Question from "@/database/question.model";
-import { connectToDatabase } from "../mongoose";
+import Question from "@/database/models/question.model";
+import { connectToDatabase } from "../index";
 import { SearchParams } from "./shared.types";
-import Answer from "@/database/answer.model";
-import User from "@/database/user.model";
-import Tag from "@/database/tag.model";
+import Answer from "@/database/models/answer.model";
+import User from "@/database/models/user.model";
+import Tag from "@/database/models/tag.model";
 
 const searchableTypes = ["question", "answer", "tag", "user"];
 
@@ -47,15 +47,15 @@ export async function globalSearch(params: SearchParams) {
               type === "user"
                 ? item.clerkId
                 : type === "answer"
-                  ? item.question
-                  : item._id,
-          })),
+                ? item.question
+                : item._id,
+          }))
         );
       }
     } else {
       // Todo: Search in the specified model type
 
-      const modelInfo = modelsAndTypes.find((item) => (item.type === type));
+      const modelInfo = modelsAndTypes.find((item) => item.type === type);
 
       if (!modelInfo) throw new Error("invalid search type");
 
@@ -75,8 +75,8 @@ export async function globalSearch(params: SearchParams) {
           type === "user"
             ? item.clerkId
             : type === "answer"
-              ? item.question
-              : item._id,
+            ? item.question
+            : item._id,
       }));
     }
 

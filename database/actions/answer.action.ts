@@ -1,11 +1,11 @@
 "use server";
 
-import Answer from "@/database/answer.model";
-import Interaction from "@/database/interaction.model";
-import Question from "@/database/question.model";
-import User from "@/database/user.model";
+import Answer from "@/database/models/answer.model";
+import Interaction from "@/database/models/interaction.model";
+import Question from "@/database/models/question.model";
+import User from "@/database/models/user.model";
 import { revalidatePath } from "next/cache";
-import { connectToDatabase } from "../mongoose";
+import { connectToDatabase } from "../index";
 import {
   AnswerVoteParams,
   CreateAnswerParams,
@@ -196,7 +196,7 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
       // * Update the author's reputation, ensuring it doesn't go below zero
       const updatedReputation = Math.max(
         0,
-        answer.author.reputation + reputationIncrement,
+        answer.author.reputation + reputationIncrement
       );
       await User.findByIdAndUpdate(answer.author, {
         $set: { reputation: updatedReputation },
@@ -231,7 +231,7 @@ export async function deleteAnswer(params: DeleteAnswerParams) {
 
     await Question.updateMany(
       { question: answerId },
-      { $pull: { answers: answerId } },
+      { $pull: { answers: answerId } }
     );
 
     await Interaction.deleteMany({ answer: answerId });

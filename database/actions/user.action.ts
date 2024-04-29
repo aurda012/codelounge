@@ -1,12 +1,12 @@
 "use server";
 
-import Answer from "@/database/answer.model";
-import Question from "@/database/question.model";
-import Tag from "@/database/tag.model";
-import User from "@/database/user.model";
+import Answer from "@/database/models/answer.model";
+import Question from "@/database/models/question.model";
+import Tag from "@/database/models/tag.model";
+import User from "@/database/models/user.model";
 import { FilterQuery } from "mongoose";
 import { revalidatePath } from "next/cache";
-import { connectToDatabase } from "../mongoose";
+import { connectToDatabase } from "../index";
 import {
   CreateUserParams,
   DeleteUserParams,
@@ -18,7 +18,7 @@ import {
   UpdateUserParams,
 } from "./shared.types";
 import { BadgeCriteriaType } from "@/types";
-import { assignBadges } from "../utils";
+import { assignBadges } from "@/lib/utils";
 
 export async function getUserById(params: GetUserByIdParams) {
   try {
@@ -152,7 +152,7 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
 
     const question = await Question.findById(questionId).populate(
       "author",
-      "_id",
+      "_id"
     );
 
     const questionAuthorId = question.author._id.toString();
@@ -342,7 +342,7 @@ export async function getUserInfo(params: GetUserByIdParams) {
       totalAnswers,
       totalQuestions,
       badgeCounts,
-      reputation
+      reputation,
     };
   } catch (error) {
     console.log(error);

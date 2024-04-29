@@ -1,10 +1,10 @@
 "use server";
 
-import Question from "@/database/question.model";
-import Tag from "@/database/tag.model";
-import User from "@/database/user.model";
+import Question from "@/database/models/question.model";
+import Tag from "@/database/models/tag.model";
+import User from "@/database/models/user.model";
 import { revalidatePath } from "next/cache";
-import { connectToDatabase } from "../mongoose";
+import { connectToDatabase } from "../index";
 import {
   CreateQuestionParams,
   DeleteQuestionParams,
@@ -14,8 +14,8 @@ import {
   QuestionVoteParams,
   RecommendedParams,
 } from "./shared.types";
-import Answer from "@/database/answer.model";
-import Interaction from "@/database/interaction.model";
+import Answer from "@/database/models/answer.model";
+import Interaction from "@/database/models/interaction.model";
 import { FilterQuery } from "mongoose";
 
 export async function createQuestion(params: CreateQuestionParams) {
@@ -38,7 +38,7 @@ export async function createQuestion(params: CreateQuestionParams) {
       const existingTag = await Tag.findOneAndUpdate(
         { name: { $regex: new RegExp(`^${tag}$`, "i") } }, //* filtering the tags using the name.
         { $setOnInsert: { name: tag }, $push: { questions: question._id } }, //* updating the tags question field with the question id.
-        { upsert: true, new: true }, //* if the tag does'nt exist then it will create an new tag with the same values specified in the update.
+        { upsert: true, new: true } //* if the tag does'nt exist then it will create an new tag with the same values specified in the update.
       );
       tagDocuments.push(existingTag._id);
     }
@@ -246,7 +246,7 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
       // * Update the author's reputation, ensuring it doesn't go below zero
       const updatedReputation = Math.max(
         0,
-        question.author.reputation + reputationIncrement,
+        question.author.reputation + reputationIncrement
       );
       await User.findByIdAndUpdate(question.author, {
         $set: { reputation: updatedReputation },
@@ -272,7 +272,7 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
 
     const deletedQuestion = await Question.findById(questionId).populate(
       "author",
-      "_id reputation",
+      "_id reputation"
     );
 
     await Question.deleteOne({ _id: questionId });
@@ -281,7 +281,7 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
 
     await Tag.updateMany(
       { questions: questionId },
-      { $pull: { questions: questionId } },
+      { $pull: { questions: questionId } }
     );
 
     await User.findByIdAndUpdate(deletedQuestion.author._id, {

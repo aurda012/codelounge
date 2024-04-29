@@ -1,10 +1,10 @@
 "use server";
 
-import Question from "@/database/question.model";
-import Tag, { ITag } from "@/database/tag.model";
-import User from "@/database/user.model";
+import Question from "@/database/models/question.model";
+import Tag, { ITag } from "@/database/models/tag.model";
+import User from "@/database/models/user.model";
 import { FilterQuery } from "mongoose";
-import { connectToDatabase } from "../mongoose";
+import { connectToDatabase } from "../index";
 import {
   GetAllTagsParams,
   GetQuestionByTagIdParams,

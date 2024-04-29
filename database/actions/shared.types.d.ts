@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-import { IUser } from "@/database/user.model";
+import { IUser } from "@/database/models/user.model";
 
 /**
  * Common interfaces used in actions
