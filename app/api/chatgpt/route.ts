@@ -4,7 +4,7 @@ export const POST = async (request: NextRequest) => {
   const { question } = await request.json();
 
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.pawan.krd/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -16,7 +16,7 @@ export const POST = async (request: NextRequest) => {
           {
             role: "system",
             content:
-              "You are a knowledgeable assistant that provides quality information.",
+              "You are a knowledgeable software developer that provides quality information.",
           },
           {
             role: "user",
