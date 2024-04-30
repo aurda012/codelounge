@@ -3,11 +3,13 @@ import { getUserById } from "@/database/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
+import { keywords } from "@/constants/metadata";
 
 export const metadata: Metadata = {
   title: "Ask a Question | CodeLounge",
   description:
     "Ready to get answers? Ask your coding questions and get help from the vibrant community of over 1,000,000 developers on CodeLounge. Whether it's about a specific framework, a programming language, or a coding challenge, our community is here to assist you.",
+  keywords: keywords,
 };
 
 const AskQuestionPage = async () => {

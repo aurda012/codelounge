@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import React from "react";
 import "./globals.css";
 import "../styles/prism.css";
+import { keywords } from "@/constants/metadata";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,6 +24,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/assets/images/site-logo.svg",
   },
+  keywords: keywords,
 };
 
 export default function RootLayout({
