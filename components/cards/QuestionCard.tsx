@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import RenderTag from "../shared/RenderTag";
-// import Metric from "../shared/Metric";
+import Metric from "../shared/Metric";
 import { getFormattedNumber, getTimestamp } from "@/lib/utils";
 import { SignedIn } from "@clerk/nextjs";
 // import EditDeleteAction from "../shared/EditDeleteAction";
@@ -67,7 +67,7 @@ const QuestionCard = ({
         ))}
       </div>
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
-        {/* <Metric
+        <Metric
           imgUrl={author.picture || "/assets/icons/avatar.svg"}
           alt="User"
           value={author.name}
@@ -76,7 +76,7 @@ const QuestionCard = ({
           isAuthor
           textStyles="bogy-medium text-dark400_light700"
         />
-        <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
+        {/* <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
           <Metric
             imgUrl="/assets/icons/like.svg"
             alt="Upvotes"
