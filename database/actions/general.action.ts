@@ -11,7 +11,7 @@ const searchableTypes = ["question", "answer", "tag", "user"];
 
 export async function globalSearch(params: SearchParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { query, type } = params;
 
