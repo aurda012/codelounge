@@ -5,9 +5,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import Metric from "@/components/shared/Metric";
-// import ParseHTML from "@/components/shared/ParseHTML";
-import RenderTag from "@/components/shared/RenderTag";
 // import Votes from "@/components/shared/Votes";
+import ParseHTML from "@/components/shared/ParseHTML";
+import RenderTag from "@/components/shared/RenderTag";
 // import Answer from "@/components/forms/Answer";
 // import AllAnswers from "@/components/shared/AllAnswers";
 import { ITag } from "@/database/models/tag.model";
@@ -91,7 +91,7 @@ const QuestionDetailPage = async ({
           textStyles="small-medium text-dark400_light800"
         />
       </div>
-      {/* <ParseHTML data={question.content} /> */}
+      <ParseHTML data={question.content} />
 
       <div className="mt-8 flex flex-row items-center justify-between">
         <div className="flex flex-wrap gap-2">
