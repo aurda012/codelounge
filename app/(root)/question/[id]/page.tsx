@@ -5,16 +5,17 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import Metric from "@/components/shared/Metric";
-// import Votes from "@/components/shared/Votes";
+import Votes from "@/components/shared/Votes";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
+import AllAnswers from "@/components/shared/AllAnswers";
 // import Answer from "@/components/forms/Answer";
-// import AllAnswers from "@/components/shared/AllAnswers";
 import { ITag } from "@/database/models/tag.model";
 import { getQuestionById } from "@/database/actions/question.action";
 import { getUserById } from "@/database/actions/user.action";
 import { getFormattedNumber, getTimestamp } from "@/lib/utils";
 import { URLProps } from "@/types";
+import { addKeywords } from "@/constants/metadata";
 
 const QuestionDetailPage = async ({
   params: { id },
@@ -27,8 +28,6 @@ const QuestionDetailPage = async ({
 
   if (clerkId) {
     mongoUser = await getUserById({ userId: clerkId });
-  } else {
-    return redirect("/sign-in");
   }
 
   return (
@@ -51,16 +50,16 @@ const QuestionDetailPage = async ({
             </p>
           </Link>
           <div className="flex justify-end">
-            {/* <Votes
+            <Votes
               type="question"
               itemId={JSON.stringify(question._id)}
-              userId={JSON.stringify(mongoUser._id)}
+              userId={JSON.stringify(mongoUser?._id)}
               upvotes={question.upvotes.length}
-              hasUpVoted={question.upvotes.includes(mongoUser._id)}
+              hasUpVoted={question.upvotes.includes(mongoUser?._id)}
               downvotes={question.downvotes.length}
-              hasDownVoted={question.downvotes.includes(mongoUser._id)}
+              hasDownVoted={question.downvotes.includes(mongoUser?._id)}
               hasSaved={mongoUser?.saved.includes(question._id)}
-            /> */}
+            />
           </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
@@ -100,9 +99,9 @@ const QuestionDetailPage = async ({
           ))}
         </div>
       </div>
-      {/* <AllAnswers
+      <AllAnswers
         questionId={JSON.stringify(question._id)}
-        userId={mongoUser._id}
+        userId={mongoUser?._id}
         totalAnswers={question.answers.length}
         filter={searchParams?.filter}
         page={searchParams?.page ? +searchParams.page : 1}
@@ -111,7 +110,7 @@ const QuestionDetailPage = async ({
         question={question.content}
         questionId={JSON.stringify(question._id)}
         authorId={JSON.stringify(mongoUser)}
-      /> */}
+      />
     </>
   );
 };
@@ -131,7 +130,7 @@ export async function generateMetadata(
   // construct description based on user data
   const description = `Find answers and discussions about the question "${question.title}" on CodeLounge.`;
   const keys = question.tags.map((tag: any) => tag.name);
-  console.log(keys);
+  const keywords = await addKeywords(keys);
 
   return {
     title: `${question.title} | CodeLounge`,

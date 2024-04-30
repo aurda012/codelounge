@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     icon: "/assets/images/site-logo.svg",
   },
   keywords: keywords,
+  metadataBase: new URL("https://codelounge.vercel.app"),
 };
 
 export default function RootLayout({
@@ -40,8 +41,7 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          // defaultTheme="light"
-          enableSystem
+          defaultTheme="dark"
           // disableTransitionOnChange
         >
           {children}
