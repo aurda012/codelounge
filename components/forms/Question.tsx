@@ -167,7 +167,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
             </FormItem>
           )}
         />
-        {/* <FormField
+        <FormField
           control={form.control}
           name="explanation"
           render={({ field }) => (
@@ -178,7 +178,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Editor
-                  apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+                  apiKey={process.env.NEXT_PUBLIC_TINY_MCE_API_KEY}
                   onInit={(evt, editor) => {
                     // @ts-ignore
                     editorRef.current = editor;
@@ -223,7 +223,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
               <FormMessage className="text-red-500" />
             </FormItem>
           )}
-        /> */}
+        />
         {/* <FormField
           control={form.control}
           name="tags"
