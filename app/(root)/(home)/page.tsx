@@ -14,10 +14,13 @@ import {
   getRecommendedQuestions,
 } from "@/database/actions/question.action";
 import { SearchParamsProps } from "@/types";
+import { keywords } from "@/constants/metadata";
 
 export const metadata: Metadata = {
-  title: "Home | Dev Overflow",
-  description: "Dev Overflow is a community of 1,000,000+ developer, Join us.",
+  title: "Home | CodeLounge",
+  description:
+    "CodeLounge is a community of 1,000,000+ developer, Join us. Ask questions, get answers, and share your knowledge with the community. Explore topics in web development, mobile app development, algorithms, data structure, and more. Get help, share knowledge, and collaborate with developers from around the world.",
+  keywords: keywords,
 };
 
 export default async function Home({ searchParams }: SearchParamsProps) {

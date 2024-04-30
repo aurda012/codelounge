@@ -18,7 +18,7 @@ const spaceGrotesk = SpaceGrotesk({
 });
 
 export const metadata: Metadata = {
-  title: "DevFlow",
+  title: "CodeLounge",
   description:
     "A community-driven platform for asking and answering questions. Get Help, share knowledge, and collaborate with developers from around the world. Explore topics in web development, mobile app development, algorithms, data structure, and more.",
   icons: {
