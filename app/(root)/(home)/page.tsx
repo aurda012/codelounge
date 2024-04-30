@@ -1,9 +1,12 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 // import QuestionCard from "@/components/cards/QuestionCard";
 // import HomeFilters from "@/components/home/HomeFilters";
-// import Filter from "@/components/shared/Filter";
 // import NoResult from "@/components/shared/NoResult";
 // import Pagination from "@/components/shared/Pagination";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
+import Filter from "@/components/shared/Filter";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import {
@@ -11,9 +14,6 @@ import {
   getRecommendedQuestions,
 } from "@/database/actions/question.action";
 import { SearchParamsProps } from "@/types";
-import { auth } from "@clerk/nextjs/server";
-import type { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Home | Dev Overflow",
@@ -64,11 +64,11 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           placeholder="Search for questions"
           otherClasses="flex-1"
         />
-        {/* <Filter
+        <Filter
           filters={HomePageFilters}
           otherClasses="min-h-[56px] sm:min-w-[170px]"
           containerClasses="hidden max-md:flex"
-        /> */}
+        />
       </div>
       {/* <HomeFilters /> */}
       {/* <div className="mt-10 flex w-full flex-col gap-6 ">
