@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 // import QuestionCard from "@/components/cards/QuestionCard";
-// import HomeFilters from "@/components/home/HomeFilters";
 // import NoResult from "@/components/shared/NoResult";
 // import Pagination from "@/components/shared/Pagination";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
 import Filter from "@/components/shared/Filter";
+import HomeFilters from "@/components/home/HomeFilters";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import {
@@ -70,7 +70,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           containerClasses="hidden max-md:flex"
         />
       </div>
-      {/* <HomeFilters /> */}
+      <HomeFilters />
       {/* <div className="mt-10 flex w-full flex-col gap-6 ">
         {result.questions.length > 0 ? (
           result.questions.map((question) => (
