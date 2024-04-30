@@ -27,8 +27,9 @@ export const POST = async (request: NextRequest) => {
     });
 
     const responseData = await response.json();
-    const replay = responseData.choices[0].message.content;
-    return NextResponse.json({ replay });
+    console.log(responseData);
+    const reply = responseData.choices[0].message.content;
+    return NextResponse.json({ reply });
   } catch (error: any) {
     return NextResponse.json({ error: error.message });
   }

@@ -9,7 +9,7 @@ import Votes from "@/components/shared/Votes";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
 import AllAnswers from "@/components/shared/AllAnswers";
-// import Answer from "@/components/forms/Answer";
+import Answer from "@/components/forms/Answer";
 import { ITag } from "@/database/models/tag.model";
 import { getQuestionById } from "@/database/actions/question.action";
 import { getUserById } from "@/database/actions/user.action";
@@ -106,11 +106,13 @@ const QuestionDetailPage = async ({
         filter={searchParams?.filter}
         page={searchParams?.page ? +searchParams.page : 1}
       />
-      <Answer
-        question={question.content}
-        questionId={JSON.stringify(question._id)}
-        authorId={JSON.stringify(mongoUser)}
-      />
+      {mongoUser && (
+        <Answer
+          question={question.content}
+          questionId={JSON.stringify(question._id)}
+          authorId={JSON.stringify(mongoUser)}
+        />
+      )}
     </>
   );
 };
