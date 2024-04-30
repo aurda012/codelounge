@@ -119,7 +119,7 @@ const Answer = ({ authorId, question, questionId }: Props) => {
           ) : (
             <>
               <Image
-                src="/assets/icons/stars.svg"
+                src="/icons/stars.svg"
                 alt="start"
                 width={12}
                 height={12}

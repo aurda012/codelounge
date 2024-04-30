@@ -13,14 +13,14 @@ const NoResult = ({ title, description, link, linkTitle }: Props) => {
   return (
     <div className="mt-10 flex w-full flex-col items-center justify-center">
       <Image
-        src="/assets/images/light-illustration.png"
+        src="/images/light-illustration.png"
         alt="no result illustration"
         height={200}
         width={270}
         className="block object-contain dark:hidden"
       />
       <Image
-        src="/assets/images/dark-illustration.png"
+        src="/images/dark-illustration.png"
         alt="no result illustration"
         height={200}
         width={270}

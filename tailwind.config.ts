@@ -72,6 +72,7 @@ const config = {
       fontFamily: {
         inter: ["var(--font-inter)"],
         spaceGrotesk: ["var(--font-spaceGrotesk)"],
+        sans: ["var(--font-inter)"],
       },
       boxShadow: {
         "light-100":
@@ -82,8 +83,8 @@ const config = {
         "dark-200": "2px 0px 20px 0px rgba(39, 36, 36, 0.04)",
       },
       backgroundImage: {
-        "auth-dark": "url('/assets/images/auth-dark.png')",
-        "auth-light": "url('/assets/images/auth-light.png')",
+        "auth-dark": "url('/images/auth-dark.png')",
+        "auth-light": "url('/images/auth-light.png')",
       },
       screens: {
         xs: "420px",

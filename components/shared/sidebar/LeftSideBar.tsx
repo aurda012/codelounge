@@ -64,7 +64,7 @@ const LeftSidebar = () => {
           <Link href="/sign-in">
             <Button className="small-medium btn-secondary min-h-[41px] w-full px-4 py-3 shadow-none rounded-[8px]">
               <Image
-                src="/assets/icons/account.svg"
+                src="/icons/account.svg"
                 alt="sign in"
                 width={20}
                 height={20}
@@ -79,7 +79,7 @@ const LeftSidebar = () => {
           <Link href="/sign-up">
             <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-[8px] px-4 py-3 shadow-none">
               <Image
-                src="/assets/icons/sign-up.svg"
+                src="/icons/sign-up.svg"
                 alt="sign up"
                 width={20}
                 height={20}

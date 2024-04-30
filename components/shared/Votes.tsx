@@ -127,11 +127,7 @@ const Votes = ({
       <div className="flex-center gap-2.5">
         <div className="flex-center gap-1.5">
           <Image
-            src={
-              hasUpVoted
-                ? "/assets/icons/upvoted.svg"
-                : "/assets/icons/upvote.svg"
-            }
+            src={hasUpVoted ? "/icons/upvoted.svg" : "/icons/upvote.svg"}
             alt="upVote"
             height={18}
             width={18}
@@ -148,11 +144,7 @@ const Votes = ({
       <div className="flex-center gap-2.5">
         <div className="flex-center gap-1.5">
           <Image
-            src={
-              hasDownVoted
-                ? "/assets/icons/downvoted.svg"
-                : "/assets/icons/downvote.svg"
-            }
+            src={hasDownVoted ? "/icons/downvoted.svg" : "/icons/downvote.svg"}
             alt="downVote"
             height={18}
             width={18}
@@ -168,11 +160,7 @@ const Votes = ({
       </div>
       {type === "question" && (
         <Image
-          src={
-            hasSaved
-              ? "/assets/icons/star-filled.svg"
-              : "/assets/icons/star-red.svg"
-          }
+          src={hasSaved ? "/icons/star-filled.svg" : "/icons/star-red.svg"}
           alt="downVote"
           height={18}
           width={18}

@@ -255,7 +255,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
                           {tag}
                           {type !== "edit" && (
                             <Image
-                              src="/assets/icons/close.svg"
+                              src="/icons/close.svg"
                               alt="close"
                               width={12}
                               height={12}

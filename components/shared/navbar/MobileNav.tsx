@@ -20,7 +20,7 @@ const NavContent = () => {
     ? sidebarLinks.map((link) =>
         link.route === "/profile"
           ? { ...link, route: `${link.route}/${userId}` }
-          : link,
+          : link
       )
     : sidebarLinks.filter((link) => link.route !== "/profile");
 
@@ -34,7 +34,11 @@ const NavContent = () => {
           <SheetClose asChild key={item.route}>
             <Link
               href={item.route}
-              className={`${isActive ? "primary-gradient rounded-lg text-light-900" : "text-dark300_light900"} flex items-center justify-start gap-4 bg-transparent p-4`}
+              className={`${
+                isActive
+                  ? "primary-gradient rounded-lg text-light-900"
+                  : "text-dark300_light900"
+              } flex items-center justify-start gap-4 bg-transparent p-4`}
             >
               <Image
                 src={item.imgURL}
@@ -59,7 +63,7 @@ const MobileNav = () => {
     <Sheet>
       <SheetTrigger asChild>
         <Image
-          src="/assets/icons/hamburger.svg"
+          src="/icons/hamburger.svg"
           alt="menu"
           width={36}
           height={36}
@@ -69,7 +73,7 @@ const MobileNav = () => {
       <SheetContent side="left" className="background-light900_dark200 border">
         <Link href="/" className="flex items-center gap-1 ">
           <Image
-            src="/assets/images/site-logo.svg"
+            src="/images/site-logo.svg"
             width={23}
             height={23}
             alt="DevFlow"

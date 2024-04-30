@@ -9,7 +9,7 @@ import Votes from "@/components/shared/Votes";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
 import AllAnswers from "@/components/shared/AllAnswers";
-import Answer from "@/components/forms/Answer";
+import Answer from "@/components/forms/AnswerV2";
 import { ITag } from "@/database/models/tag.model";
 import { getQuestionById } from "@/database/actions/question.action";
 import { getUserById } from "@/database/actions/user.action";
@@ -69,21 +69,21 @@ const QuestionDetailPage = async ({
 
       <div className="mb-8 mt-5 flex flex-wrap gap-4">
         <Metric
-          imgUrl="/assets/icons/clock.svg"
+          imgUrl="/icons/clock.svg"
           alt="clock icon"
           value={` asked ${getTimestamp(question.createdAt)}`}
           title=""
           textStyles="small-medium text-dark400_light800"
         />
         <Metric
-          imgUrl="/assets/icons/message.svg"
+          imgUrl="/icons/message.svg"
           alt="Message"
           value={getFormattedNumber(question.answers.length)}
           title=" Answers"
           textStyles="small-medium text-dark400_light800"
         />
         <Metric
-          imgUrl="/assets/icons/eye.svg"
+          imgUrl="/icons/eye.svg"
           alt="Eye"
           value={getFormattedNumber(question.views)}
           title=" Views"
