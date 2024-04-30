@@ -155,7 +155,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Input
-                  className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+                  className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border rounded-[8px]"
                   {...field}
                 />
               </FormControl>
@@ -224,7 +224,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
             </FormItem>
           )}
         />
-        {/* <FormField
+        <FormField
           control={form.control}
           name="tags"
           render={({ field }) => (
@@ -236,7 +236,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
                 <>
                   <Input
                     disabled={type === "edit"}
-                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border rounded-[8px]"
                     placeholder="Add tags..."
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
                   />
@@ -275,16 +275,16 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
               <FormMessage className="text-red-500" />
             </FormItem>
           )}
-        /> */}
+        />
         <Button
           disabled={isSubmitting}
           type="submit"
-          className="primary-gradient w-fit !text-light-900"
+          className="primary-gradient w-fit !text-light-900 rounded-[8px]"
         >
           {isSubmitting ? (
             <>{type === "edit" ? "Editing..." : "Posting..."}</>
           ) : (
-            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
+            <>{type === "edit" ? "Edit Question" : "Ask Question"}</>
           )}
         </Button>
       </form>
