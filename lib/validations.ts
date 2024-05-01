@@ -7,12 +7,12 @@ export const QuestionSchema = z.object({
       message: "Title must be at least 5 characters.",
     })
     .max(130, { message: "Title must cannot exceed 130 characters." }),
-  explanation: z.string().min(100),
+  explanation: z.string().min(20).max(10000),
   tags: z.array(z.string().min(1).max(15)).min(1).max(3),
 });
 
 export const AnswerSchema = z.object({
-  answer: z.string().min(100),
+  answer: z.string().min(20).max(10000),
 });
 
 export const ProfileSchema = z.object({

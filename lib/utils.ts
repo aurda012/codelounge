@@ -13,6 +13,11 @@ import type {
   FilterProps,
 } from "@/types";
 import type { GetFormattedSalaryParams } from "@/database/actions/shared.types";
+import { Editor } from "@tiptap/react";
+import CodeBlock from "@tiptap/extension-code-block";
+import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
+import { ImageBlock } from "@/components/editor/extensions/ImageBlock";
+import { Link } from "@/components/editor/extensions/Link";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -203,3 +208,16 @@ const salaryFormatter = (num: number, digits: number) => {
 export function isValidImage(url: string) {
   return /\.(jpg|jpeg|png|webp||svg)$/.test(url);
 }
+
+export const isCustomNodeSelected = (editor: Editor, node: HTMLElement) => {
+  const customNodes = [
+    CodeBlock.name,
+    CodeBlockLowlight.name,
+    ImageBlock.name,
+    Link.name,
+  ];
+
+  return customNodes.some((type) => editor.isActive(type));
+};
+
+export default isCustomNodeSelected;

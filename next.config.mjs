@@ -15,6 +15,9 @@ const nextConfig = {
       { protocol: "https", hostname: "*" },
     ],
   },
+  experimental: {
+    serverComponentsExternalPackages: ["@tiptap/react"],
+  },
 };
 
 export default nextConfig;

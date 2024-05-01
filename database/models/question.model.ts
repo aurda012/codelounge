@@ -2,7 +2,7 @@ import { Document, Schema, model, models } from "mongoose";
 
 export interface IQuestion extends Document {
   title: string;
-  content: string;
+  content: { type: string; children: {}[] }[];
   tags: Schema.Types.ObjectId[];
   views: number;
   upvotes: Schema.Types.ObjectId[];
@@ -14,6 +14,12 @@ export interface IQuestion extends Document {
 
 const QuestionSchema = new Schema({
   title: { type: String, required: true },
+  // content: [
+  //   {
+  //     type: { type: String, required: true },
+  //     children: [{ type: Schema.Types.Mixed }],
+  //   },
+  // ],
   content: { type: String, required: true },
   tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
   views: { type: Number, default: 0 },

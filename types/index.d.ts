@@ -1,5 +1,7 @@
 import { BADGE_CRITERIA } from "@/constants";
 
+export interface EditorContent {}
+
 export interface FilterProps {
   name: string;
   value: string;

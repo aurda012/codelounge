@@ -1,0 +1,116 @@
+.ProseMirror code {
+  border-radius: 0.125rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    Liberation Mono, Courier New, monospace;
+  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
+    0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  @apply bg-[#fafafa] text-[#383a42] caret-black dark:bg-[#282c34] dark:text-[#fff] dark:caret-white;
+}
+
+.ProseMirror pre {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  padding: 1rem;
+  @apply bg-[#fafafa] text-[#383a42] caret-black dark:bg-[#282c34] dark:border-black dark:text-[#fff] dark:caret-white;
+}
+
+:is(.dark .ProseMirror pre) {
+  @apply bg-[#fafafa] dark:bg-[#282c34] dark:border-black;
+}
+
+.ProseMirror code::-moz-selection {
+  @apply bg-black/20 dark:bg-white/30;
+}
+
+.ProseMirror code::selection {
+  @apply bg-black/20 dark:bg-white/30;
+}
+
+.ProseMirror pre code {
+  background-color: inherit;
+  padding: 0;
+  color: inherit;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.ProseMirror pre .hljs {
+  @apply text-[#383a42] bg-[#fafafa] dark:bg-[#282c34] dark:text-white;
+}
+
+.ProseMirror pre .hljs-comment,
+.ProseMirror pre .hljs-quote {
+  @apply italic text-[#a0a1a7] dark:text-[#5c6370];
+}
+
+.ProseMirror pre .hljs-doctag,
+.ProseMirror pre .hljs-keyword,
+.ProseMirror pre .hljs-formula {
+  @apply text-[#a626a4] dark:text-[#c678dd];
+}
+
+.ProseMirror pre .hljs-section,
+.ProseMirror pre .hljs-name,
+.ProseMirror pre .hljs-selector-tag,
+.ProseMirror pre .hljs-deletion,
+.ProseMirror pre .hljs-subst {
+  @apply text-[#e45649] dark:text-[#e06c75];
+}
+
+.ProseMirror pre .hljs-literal {
+  @apply text-[#0184bb] dark:text-[#56b6c2];
+}
+
+.ProseMirror pre .hljs-string,
+.ProseMirror pre .hljs-regexp,
+.ProseMirror pre .hljs-addition,
+.ProseMirror pre .hljs-attribute,
+.ProseMirror pre .hljs-meta .ProseMirror pre .hljs-string {
+  @apply text-[#50a14f] dark:text-[#98c379];
+}
+
+.ProseMirror pre .hljs-attr,
+.ProseMirror pre .hljs-variable,
+.ProseMirror pre .hljs-template-variable,
+.ProseMirror pre .hljs-type,
+.ProseMirror pre .hljs-selector-class,
+.ProseMirror pre .hljs-selector-attr,
+.ProseMirror pre .hljs-selector-pseudo,
+.ProseMirror pre .hljs-number {
+  @apply text-[#986801] dark:text-[#d19a66];
+}
+
+.ProseMirror pre .hljs-symbol,
+.ProseMirror pre .hljs-bullet,
+.ProseMirror pre .hljs-link,
+.ProseMirror pre .hljs-meta,
+.ProseMirror pre .hljs-selector-id,
+.ProseMirror pre .hljs-title {
+  @apply text-[#4078f2] dark:text-[#61aeee];
+}
+
+.ProseMirror pre .hljs-built_in,
+.ProseMirror pre .hljs-title.class_,
+.ProseMirror pre .hljs-class .ProseMirror pre .hljs-title {
+  @apply text-[#c18401] dark:text-[#e6c07b];
+}
+
+.ProseMirror pre .hljs-emphasis {
+  font-style: italic;
+}
+
+.ProseMirror pre .hljs-strong {
+  font-weight: bold;
+}
+
+.ProseMirror pre .hljs-link {
+  text-decoration: underline;
+}
