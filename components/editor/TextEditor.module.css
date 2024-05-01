@@ -35,6 +35,13 @@
   height: 100%;
 }
 
+.editorReadOnly {
+  border-radius: inherit;
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+}
+
 .editor:focus {
   outline: none;
 }

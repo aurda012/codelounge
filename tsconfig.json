@@ -26,7 +26,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "lib/serialize-html.js"
+    "lib/serialize-html.js",
+    "components/editor/extensions/Indent/index.js"
   ],
   "exclude": ["node_modules"]
 }

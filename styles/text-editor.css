@@ -55,8 +55,9 @@ h3.tiptap-heading + h2.tiptap-heading {
 
 /* Advanced inline styles below */
 .tiptap-code {
-  font-size: 1.2em;
-  line-height: 1em;
+  font-size: 1em;
+  line-height: 0.8em;
+  font-stretch: wider;
   background: var(--color-surface-hover);
   border-radius: var(--radius-xs);
   font-weight: 400;

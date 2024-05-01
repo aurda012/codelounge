@@ -16,6 +16,7 @@ import { getUserById } from "@/database/actions/user.action";
 import { getFormattedNumber, getTimestamp } from "@/lib/utils";
 import { URLProps } from "@/types";
 import { addKeywords } from "@/constants/metadata";
+import ReadTextEditor from "@/components/editor/ReadTextEditor";
 
 const QuestionDetailPage = async ({
   params: { id },
@@ -90,7 +91,7 @@ const QuestionDetailPage = async ({
           textStyles="small-medium text-dark400_light800"
         />
       </div>
-      <ParseHTML data={question.content} />
+      <ReadTextEditor content={question.content} />
 
       <div className="mt-8 flex flex-row items-center justify-between">
         <div className="flex flex-wrap gap-2">
