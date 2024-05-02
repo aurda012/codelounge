@@ -13,7 +13,7 @@ import { CustomTaskItem } from "./CustomTaskItem/CustomTaskItem";
 import { ImageUpload } from "./ImageUpload";
 import { ImageBlock } from "./ImageBlock";
 import { Link } from "./Link";
-import { Indent } from "./Indent";
+import { IndentExtension } from "./Indent";
 import API from "@/lib/api";
 
 export const ExtensionKit = [
@@ -94,7 +94,7 @@ export const ExtensionKit = [
   TextAlign.configure({
     types: ["heading", "paragraph"],
   }),
-  Indent,
+  IndentExtension,
   Typography,
   ImageUpload,
   ImageBlock,

@@ -82,25 +82,23 @@ div.tiptap.ProseMirror[contenteditable="false"] {
 }
 
 div.tiptap.ProseMirror[contenteditable="false"] {
-  pre {
-    @apply min-w-full;
-  }
-  p {
-    @apply min-w-full;
+  pre,
+  p,
+  .tiptap-heading,
+  ol,
+  ul {
+    @apply min-w-full mx-0;
   }
 }
 
 div.tiptap.ProseMirror[contenteditable="true"] {
   @apply p-2 min-w-full mx-0;
-
-  pre {
-    @apply min-w-full;
-  }
-  p {
-    @apply min-w-full;
-  }
-  .tiptap-heading {
-    @apply min-w-full;
+  pre,
+  p,
+  .tiptap-heading,
+  ol,
+  ul {
+    @apply min-w-full mx-0;
   }
 }
 
