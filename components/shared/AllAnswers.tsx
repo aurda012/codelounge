@@ -7,6 +7,7 @@ import Filter from "./Filter";
 import Pagination from "./Pagination";
 import ParseHTML from "./ParseHTML";
 import Votes from "./Votes";
+import ReadTextEditor from "../editor/ReadTextEditor";
 
 interface Props {
   questionId: string;
@@ -71,7 +72,7 @@ const AllAnswers = async ({
                 />
               </div>
             </div>
-            <ParseHTML data={answer.content} />
+            <ReadTextEditor content={answer.content} />
           </article>
         ))}
       </div>

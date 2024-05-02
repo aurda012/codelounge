@@ -23,8 +23,8 @@ export function ToolbarMedia({ editor }: Props) {
     if (!url.length) {
       return;
     }
-
-    editor.chain().setImage({ src: url }).run();
+    editor.chain().setImageUpload().run();
+    // editor.chain().setImage({ src: url }).run();
   }
 
   return (
@@ -43,11 +43,29 @@ export function ToolbarMedia({ editor }: Props) {
         <CodeBlockIcon />
       </Button>
 
-      <Popover>
+      <Button
+        className="p-2"
+        variant="ghost"
+        onClick={(e) => {
+          e.preventDefault();
+          editor.chain().focus().setImageUpload().run();
+        }}
+        disabled={!editor.can().chain().setImage({ src: "" }).run()}
+        data-active={editor.isActive("image") ? "is-active" : undefined}
+        aria-label="Image"
+      >
+        <ImageIcon />
+      </Button>
+
+      {/* <Popover>
         <PopoverTrigger asChild>
           <Button
             className="p-2"
             variant="ghost"
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().setImageUpload().run();
+            }}
             disabled={!editor.can().chain().setImage({ src: "" }).run()}
             data-active={editor.isActive("image") ? "is-active" : undefined}
             aria-label="Image"
@@ -58,7 +76,7 @@ export function ToolbarMedia({ editor }: Props) {
         <PopoverContent className="p-0 w-full">
           <MediaPopover variant="image" onSubmit={addImage} />
         </PopoverContent>
-      </Popover>
+      </Popover> */}
     </>
   );
 }

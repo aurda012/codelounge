@@ -47,6 +47,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "html-react-parser": "^5.1.10",
+    "imagekit": "^5.0.1",
     "lowlight": "^2.9.0",
     "lucide-react": "^0.376.0",
     "mongoose": "^8.3.3",

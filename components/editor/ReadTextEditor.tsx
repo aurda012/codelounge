@@ -24,7 +24,7 @@ export default function ReadTextEditor({ content }: { content: JSONContent }) {
       <div className="flex-1 overflow-y-scroll p-0 min-w-full mx-auto">
         <EditorContent
           editor={editor}
-          className="relative min-h-[250px] p-0 min-w-full mx-auto"
+          className="relative p-0 min-w-full mx-auto"
         />
       </div>
     </div>

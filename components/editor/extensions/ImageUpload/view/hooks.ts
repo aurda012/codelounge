@@ -3,7 +3,24 @@ import { toast } from "@/components/ui/use-toast";
 import { API } from "@/lib/api";
 import { randomUUID } from "crypto";
 // import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-// import { Database } from "@/lib/supabase/types";
+// import { Database } from "@/lib/supabase/types"
+import ImageKit from "imagekit";
+// import fs from "fs";
+
+var imagekit = new ImageKit({
+  publicKey: "public_j8uWupejZdnhR4b28cyfZdOWR18=",
+  privateKey: "private_TFNli8KOHERe9cYlBLrrk3jvr6o=",
+  urlEndpoint: "https://ik.imagekit.io/codelounge",
+});
+
+// function imageToBuffer(file: File) {
+//   try {
+//     const buffer = fs.readFileSync(file);
+//     return buffer;
+//   } catch (error) {
+//     console.error("Error reading the image file:", error);
+//   }
+// }
 
 export const useUploader = ({
   onUpload,
@@ -20,9 +37,11 @@ export const useUploader = ({
       try {
         let filePath = "";
         const id = Math.random().toString(36).substring(0, 18);
-        // const { data, error } = await supabase.storage
-        //   .from("editor-images")
-        //   .upload(`${id}`, file, { cacheControl: "5", upsert: true });
+        // const results = await imagekit.upload({
+        //   file,
+        //   fileName: "abc1.jpg",
+        //   tags: ["tag1"],
+        // });
         // console.log(error);
         // if (error) throw new Error();
         // console.log(data);
@@ -31,7 +50,6 @@ export const useUploader = ({
         //   .from("editor-images")
         //   .getPublicUrl(filePath);
         // const url = dataUrl?.publicUrl;
-        // // const url = await API.uploadImage();
 
         // onUpload(url);
       } catch (errPayload: any) {

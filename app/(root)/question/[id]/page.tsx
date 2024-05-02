@@ -9,7 +9,7 @@ import Votes from "@/components/shared/Votes";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
 import AllAnswers from "@/components/shared/AllAnswers";
-import Answer from "@/components/forms/Answer";
+import Answer from "@/components/forms/AnswerV2";
 import { ITag } from "@/database/models/tag.model";
 import { getQuestionById } from "@/database/actions/question.action";
 import { getUserById } from "@/database/actions/user.action";

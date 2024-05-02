@@ -13,7 +13,8 @@ import { CustomTaskItem } from "./CustomTaskItem/CustomTaskItem";
 import { ImageUpload } from "./ImageUpload";
 import { ImageBlock } from "./ImageBlock";
 import { Link } from "./Link";
-import { IndentExtension } from "./Indent";
+// import { IndentExtension } from "./Indent";
+import { IndentExtension } from "./Indent/indent-v2";
 import API from "@/lib/api";
 
 export const ExtensionKit = [

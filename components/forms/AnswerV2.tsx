@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { toast } from "../ui/use-toast";
+import TextEditor from "../editor/TextEditor";
 
 interface Props {
   authorId: string;
@@ -132,8 +133,13 @@ const Answer = ({ authorId, question, questionId }: Props) => {
       </div>
       <Form {...form}>
         <form
-          className="mt-6 flex flex-col gap-12"
+          className="mt-6 flex flex-col gap-6"
           onSubmit={form.handleSubmit(handleCreateAnswer)}
+          onKeyDown={(e) => {
+            if (e.key === "Tab") {
+              e.preventDefault();
+            }
+          }}
         >
           <FormField
             control={form.control}
@@ -141,43 +147,9 @@ const Answer = ({ authorId, question, questionId }: Props) => {
             render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3">
                 <FormControl className="mt-3.5">
-                  <Editor
-                    apiKey={process.env.NEXT_PUBLIC_TINY_MCE_API_KEY}
-                    onInit={(evt, editor) => {
-                      // @ts-ignore
-                      editorRef.current = editor;
-                    }}
-                    onBlur={field.onBlur}
-                    onEditorChange={(content) => field.onChange(content)}
-                    init={{
-                      height: 350,
-                      menubar: false,
-                      plugins: [
-                        "advlist",
-                        "autolink",
-                        "lists",
-                        "link",
-                        "image",
-                        "charmap",
-                        "preview",
-                        "anchor",
-                        "searchreplace",
-                        "visualblocks",
-                        "codesample",
-                        "fullscreen",
-                        "insertdatetime",
-                        "media",
-                        "table",
-                      ],
-                      toolbar:
-                        "undo redo | " +
-                        "codesample | bold italic forecolor | alignleft aligncenter |" +
-                        "alignright alignjustify | bullist numlist",
-                      content_style:
-                        "body { font-family:Inter; font-size:16px }",
-                      skin: theme === "dark" ? "oxide-dark" : "oxide",
-                      content_css: theme === "dark" ? "dark" : "light",
-                    }}
+                  <TextEditor
+                    onChange={(content) => field.onChange(content)}
+                    content={JSON.parse("[]")}
                   />
                 </FormControl>
                 <FormMessage className="text-red-500" />

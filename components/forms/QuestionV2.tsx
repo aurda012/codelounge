@@ -182,14 +182,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
                 Detailed explanation of your problem{" "}
                 <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl
-                className="mt-3.5"
-                onKeyDown={(e) => {
-                  if (e.key === "Tab") {
-                    e.preventDefault();
-                  }
-                }}
-              >
+              <FormControl className="mt-3.5">
                 <TextEditor
                   onChange={(content) => field.onChange(content)}
                   content={JSON.parse("[]")}
