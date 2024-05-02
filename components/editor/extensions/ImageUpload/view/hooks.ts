@@ -5,22 +5,14 @@ import { randomUUID } from "crypto";
 // import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 // import { Database } from "@/lib/supabase/types"
 import ImageKit from "imagekit";
+import { convertImageToBase64 } from "@/lib/utils";
 // import fs from "fs";
 
 var imagekit = new ImageKit({
-  publicKey: "public_j8uWupejZdnhR4b28cyfZdOWR18=",
+  publicKey: process.env.NEXT_PUBLIC_IMAGE_KIT_KEY!,
   privateKey: "private_TFNli8KOHERe9cYlBLrrk3jvr6o=",
-  urlEndpoint: "https://ik.imagekit.io/codelounge",
+  urlEndpoint: process.env.NEXT_PUBLIC_IMAGE_KIT_URL!,
 });
-
-// function imageToBuffer(file: File) {
-//   try {
-//     const buffer = fs.readFileSync(file);
-//     return buffer;
-//   } catch (error) {
-//     console.error("Error reading the image file:", error);
-//   }
-// }
 
 export const useUploader = ({
   onUpload,
@@ -37,22 +29,19 @@ export const useUploader = ({
       try {
         let filePath = "";
         const id = Math.random().toString(36).substring(0, 18);
-        // const results = await imagekit.upload({
-        //   file,
-        //   fileName: "abc1.jpg",
-        //   tags: ["tag1"],
-        // });
-        // console.log(error);
-        // if (error) throw new Error();
-        // console.log(data);
-        // filePath = data.path;
-        // const { data: dataUrl } = await supabase.storage
-        //   .from("editor-images")
-        //   .getPublicUrl(filePath);
-        // const url = dataUrl?.publicUrl;
+        const type = file.type.split("/")[1];
+        console.log({ type });
+        const base64 = await convertImageToBase64(file);
+        const results = await imagekit.upload({
+          file: base64,
+          fileName: `${id}.${type}`,
+        });
+        console.log({ results });
+        const url = results.url;
 
-        // onUpload(url);
+        onUpload(url);
       } catch (errPayload: any) {
+        console.log(errPayload.message);
         const error =
           errPayload?.response?.data?.error || "Something went wrong";
         toast({

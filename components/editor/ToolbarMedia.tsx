@@ -1,5 +1,8 @@
+"use client";
+
 import { Editor } from "@tiptap/react";
 import { useState } from "react";
+import { lowlight } from "lowlight";
 import {
   CodeBlockIcon,
   ImageIcon,
@@ -12,36 +15,219 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
 import styles from "./Toolbar.module.css";
+import { set } from "mongoose";
+import { ScrollArea } from "../ui/scroll-area";
+
+const languages = [
+  {
+    value: "arduino",
+    label: "Arduino",
+  },
+  {
+    value: "bash",
+    label: "Bash",
+  },
+  {
+    value: "c",
+    label: "C",
+  },
+  {
+    value: "cpp",
+    label: "Cpp",
+  },
+  {
+    value: "csharp",
+    label: "C#",
+  },
+  {
+    value: "css",
+    label: "Css",
+  },
+  {
+    value: "diff",
+    label: "Diff",
+  },
+  {
+    value: "go",
+    label: "Go",
+  },
+  {
+    value: "graphql",
+    label: "Graphql",
+  },
+  {
+    value: "ini",
+    label: "Ini",
+  },
+  {
+    value: "java",
+    label: "Java",
+  },
+  {
+    value: "javascript",
+    label: "JavaScript",
+  },
+  {
+    value: "json",
+    label: "JSON",
+  },
+  {
+    value: "kotlin",
+    label: "Kotlin",
+  },
+  {
+    value: "less",
+    label: "Less",
+  },
+  {
+    value: "lua",
+    label: "Lua",
+  },
+  {
+    value: "makefile",
+    label: "Makefile",
+  },
+  {
+    value: "markdown",
+    label: "Markdown",
+  },
+  {
+    value: "objectivec",
+    label: "Objective-C",
+  },
+  {
+    value: "perl",
+    label: "Perl",
+  },
+  {
+    value: "php",
+    label: "Php",
+  },
+  {
+    value: "php-template",
+    label: "Php-template",
+  },
+  {
+    value: "plaintext",
+    label: "Plaintext",
+  },
+  {
+    value: "python",
+    label: "Python",
+  },
+  {
+    value: "python-repl",
+    label: "Python-repl",
+  },
+  {
+    value: "r",
+    label: "R",
+  },
+  {
+    value: "ruby",
+    label: "Ruby",
+  },
+  {
+    value: "rust",
+    label: "Rust",
+  },
+  {
+    value: "scss",
+    label: "Scss",
+  },
+  {
+    value: "shell",
+    label: "Shell",
+  },
+  {
+    value: "sql",
+    label: "Sql",
+  },
+  {
+    value: "swift",
+    label: "Swift",
+  },
+  {
+    value: "typescript",
+    label: "TypeScript",
+  },
+  {
+    value: "vbnet",
+    label: "VBnet",
+  },
+  {
+    value: "wasm",
+    label: "Wasm",
+  },
+  {
+    value: "xml",
+    label: "Xml",
+  },
+  {
+    value: "yaml",
+    label: "Yaml",
+  },
+];
 
 type Props = {
   editor: Editor;
 };
 
 export function ToolbarMedia({ editor }: Props) {
-  function addImage(url: string) {
-    if (!url.length) {
-      return;
-    }
-    editor.chain().setImageUpload().run();
-    // editor.chain().setImage({ src: url }).run();
-  }
-
+  const [open, setOpen] = useState(false);
   return (
     <>
-      <Button
-        className="p-2"
-        variant="ghost"
-        onClick={(e) => {
-          e.preventDefault();
-          editor.chain().focus().toggleCodeBlock().run();
-        }}
-        disabled={!editor.can().chain().focus().toggleCodeBlock().run()}
-        data-active={editor.isActive("codeBlock") ? "is-active" : undefined}
-        aria-label="Code block"
-      >
-        <CodeBlockIcon />
-      </Button>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            className="p-2"
+            variant="ghost"
+            onClick={(e) => {
+              e.preventDefault();
+              setOpen(true);
+            }}
+            role="combobox"
+            aria-expanded={open}
+            aria-label="Code block"
+          >
+            <CodeBlockIcon />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[200px] p-0">
+          <Command>
+            <CommandInput placeholder="Search framework..." />
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup>
+              <ScrollArea className="h-72 w-48">
+                {languages.map((lang) => (
+                  <CommandItem
+                    key={lang.value}
+                    value={lang.value}
+                    onSelect={(currentValue) => {
+                      editor
+                        .chain()
+                        .focus()
+                        .setCodeBlock({ language: currentValue })
+                        .run();
+                      setOpen(false);
+                    }}
+                  >
+                    {lang.label}
+                  </CommandItem>
+                ))}
+              </ScrollArea>
+            </CommandGroup>
+          </Command>
+        </PopoverContent>
+      </Popover>
 
       <Button
         className="p-2"
@@ -56,61 +242,6 @@ export function ToolbarMedia({ editor }: Props) {
       >
         <ImageIcon />
       </Button>
-
-      {/* <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            className="p-2"
-            variant="ghost"
-            onClick={(e) => {
-              e.preventDefault();
-              editor.chain().focus().setImageUpload().run();
-            }}
-            disabled={!editor.can().chain().setImage({ src: "" }).run()}
-            data-active={editor.isActive("image") ? "is-active" : undefined}
-            aria-label="Image"
-          >
-            <ImageIcon />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="p-0 w-full">
-          <MediaPopover variant="image" onSubmit={addImage} />
-        </PopoverContent>
-      </Popover> */}
     </>
-  );
-}
-
-type MediaPopoverProps = {
-  variant: "image" | "youtube";
-  onSubmit: (url: string) => void;
-};
-
-function MediaPopover({ variant, onSubmit }: MediaPopoverProps) {
-  const [value, setValue] = useState("");
-
-  return (
-    <form className={styles.toolbarPopover}>
-      <label className={styles.toolbarPopoverLabel} htmlFor="">
-        Add {variant === "image" ? "image" : "YouTube"} URL
-      </label>
-      <div className={styles.toolbarPopoverBar}>
-        <Input
-          className={`${styles.toolbarPopoverInput} no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 border rounded-[8px]`}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <Button
-          variant="outline"
-          onClick={(e) => {
-            e.preventDefault();
-            onSubmit(value);
-          }}
-          className={styles.toolbarPopoverButton}
-        >
-          Add {variant === "image" ? "image" : "video"}
-        </Button>
-      </div>
-    </form>
   );
 }

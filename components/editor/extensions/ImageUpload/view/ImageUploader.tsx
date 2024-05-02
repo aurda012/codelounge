@@ -1,6 +1,6 @@
 import { Spinner } from "@/components/ui/Spinner";
 import { useDropZone, useFileUpload, useUploader } from "./hooks";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button/Button";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
 import { ChangeEvent, useCallback } from "react";
@@ -17,8 +17,10 @@ export const ImageUploader = ({
   });
 
   const onFileChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) =>
-      e.target.files ? uploadFile(e.target.files[0]) : null,
+    (e: ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      e.target.files ? uploadFile(e.target.files[0]) : null;
+    },
     [uploadFile]
   );
 
@@ -54,7 +56,10 @@ export const ImageUploader = ({
         <div>
           <Button
             disabled={draggedInside}
-            onClick={handleUploadClick}
+            onClick={(e) => {
+              e.preventDefault();
+              handleUploadClick();
+            }}
             variant="primary"
             buttonSize="small"
           >

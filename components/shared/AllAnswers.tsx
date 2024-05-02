@@ -8,8 +8,11 @@ import Pagination from "./Pagination";
 import ParseHTML from "./ParseHTML";
 import Votes from "./Votes";
 import ReadTextEditor from "../editor/ReadTextEditor";
+import { SignedIn } from "@clerk/nextjs";
+import EditDeleteAction from "./EditDeleteAction";
 
 interface Props {
+  clerkId?: string | null;
   questionId: string;
   userId: string;
   totalAnswers: number;
@@ -18,6 +21,7 @@ interface Props {
 }
 
 const AllAnswers = async ({
+  clerkId,
   questionId,
   userId,
   totalAnswers,
@@ -41,7 +45,7 @@ const AllAnswers = async ({
             <div className="mb-8 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
               <Link
                 href={`/profile/${answer.author.clerkId}`}
-                className="flex flex-1 items-start gap-1 sm:items-center"
+                className="flex items-start gap-1 sm:items-center"
               >
                 <Image
                   src={answer.author.picture}
@@ -60,7 +64,7 @@ const AllAnswers = async ({
                   </p>
                 </div>
               </Link>
-              <div className="flex justify-end">
+              <div className="flex justify-end gap-3">
                 <Votes
                   type="answer"
                   itemId={JSON.stringify(answer._id)}
@@ -70,6 +74,14 @@ const AllAnswers = async ({
                   downvotes={answer.downvotes.length}
                   hasDownVoted={answer.downvotes.includes(userId)}
                 />
+                <SignedIn>
+                  {clerkId && clerkId === answer.author.clerkId && (
+                    <EditDeleteAction
+                      type="answer"
+                      itemId={JSON.stringify(answer._id)}
+                    />
+                  )}
+                </SignedIn>
               </div>
             </div>
             <ReadTextEditor content={answer.content} />

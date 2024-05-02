@@ -23,6 +23,23 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function convertImageToBase64(file: File) {
+  return new Promise((resolve: (value: string) => void, reject) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const readerResult = reader.result as string;
+      resolve(readerResult);
+    };
+
+    reader.onerror = (error) => {
+      reject(error);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
 export const getActualDateAndMonth = (dateString: Date): string => {
   const date = new Date(dateString);
   const months = [

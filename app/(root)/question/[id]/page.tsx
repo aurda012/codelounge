@@ -101,6 +101,7 @@ const QuestionDetailPage = async ({
         </div>
       </div>
       <AllAnswers
+        clerkId={clerkId}
         questionId={JSON.stringify(question._id)}
         userId={mongoUser?._id}
         totalAnswers={question.answers.length}
