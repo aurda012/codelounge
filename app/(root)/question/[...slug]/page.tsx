@@ -16,21 +16,45 @@ import { getFormattedNumber, getTimestamp, slugify } from "@/lib/utils";
 import { URLProps } from "@/types";
 import { addKeywords } from "@/constants/metadata";
 import ReadTextEditor from "@/components/editor/ReadTextEditor";
+import NoResult from "@/components/shared/NoResult";
 
 const QuestionDetailPage = async ({
   params: { slug },
   searchParams,
 }: URLProps) => {
   const [id, title] = slug;
-  console.log({ title });
+  if (id.length !== 24) {
+    return (
+      <div className="paragraph-regular text-dark200_light800 mx-auto max-w-4xl text-center">
+        <NoResult
+          title="No Question Found"
+          description="It looks like there isn't a question with that ID."
+          link="/ask-question"
+          linkTitle="Ask a question"
+        />
+      </div>
+    );
+  }
   const { question } = await getQuestionById({
     questionId: id,
   });
+  if (!question) {
+    return (
+      <div className="paragraph-regular text-dark200_light800 mx-auto max-w-4xl text-center">
+        <NoResult
+          title="No Question Found"
+          description="It looks like there isn't a question with that ID."
+          link="/ask-question"
+          linkTitle="Ask a question"
+        />
+      </div>
+    );
+  }
   const slugTitle = slugify(question.title);
   if (title !== slugTitle) {
     redirect(`/question/${id}/${slugTitle}`);
   }
-  console.log(slugTitle);
+
   const { userId: clerkId } = auth();
 
   let mongoUser;
@@ -136,10 +160,28 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   // read route params
   const [id] = slug;
+
+  // not found metadata
+  const notFound = {
+    title: `Not Found | CodeLounge`,
+    openGraph: {
+      title: `Not Found | CodeLounge`,
+      url: `https://codelounge.vercel.app/question/${id}`,
+    },
+    twitter: {
+      title: `Not Found | CodeLounge`,
+    },
+  };
+  if (id.length !== 24) {
+    return notFound;
+  }
   // fetch data
   const { question } = await getQuestionById({
     questionId: id,
   });
+  if (!question) {
+    return notFound;
+  }
   // construct description based on user data
   const description = `Find answers about "${question.title}".`;
   const keys = question.tags.map((tag: any) => tag.name);
@@ -152,7 +194,9 @@ export async function generateMetadata(
     openGraph: {
       title: `${question.title} | CodeLounge`,
       description,
-      url: `https://codelounge.vercel.app/question/${id}`,
+      url: `https://codelounge.vercel.app/question/${id}/${slugify(
+        question.title
+      )}`,
     },
     twitter: {
       title: `${question.title} | CodeLounge`,

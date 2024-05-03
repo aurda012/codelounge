@@ -107,7 +107,7 @@ export async function getTagById(params: GetTagByIdParams) {
   }
 }
 
-export async function getQuestionByTagId(params: GetQuestionByTagIdParams) {
+export async function getQuestionsByTagId(params: GetQuestionByTagIdParams) {
   try {
     await connectToDatabase();
     const { tagId, searchQuery, page = 1, pageSize = 10 } = params;
@@ -134,7 +134,7 @@ export async function getQuestionByTagId(params: GetQuestionByTagIdParams) {
     });
 
     if (!tag) {
-      throw new Error("Tag not found");
+      console.log("No tag found");
     }
 
     const questions = tag.questions;

@@ -141,7 +141,7 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
         select: "_id clerkId name picture",
       });
     if (!question) {
-      throw new Error("Question does not exists.");
+      console.log("Question not found");
     }
     return { question };
   } catch (error) {

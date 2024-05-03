@@ -7,6 +7,7 @@ import { getAllTags } from "@/database/actions/tag.action";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { slugify } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Tags | CodeLounge",
@@ -53,7 +54,7 @@ const TagsPage = async ({ searchParams }: SearchParamsProps) => {
         {result.tags.length > 0 ? (
           result.tags.map((tag) => (
             <Link
-              href={`/tags/${tag._id}`}
+              href={`/tags/${tag._id}/${slugify(tag.name)}`}
               key={tag._id}
               className="shadow-light100_darknone flex flex-grow"
             >
