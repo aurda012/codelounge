@@ -52,7 +52,6 @@ export const metadata: Metadata = {
     images: ["https://codelounge.vercel.app/images/og-image-1200x628.png"], // Must be an absolute URL
   },
   icons: {
-    icon: "/images/site-logo.svg",
     shortcut: "/images/favicon-32x32.png",
     apple: "/images/apple-touch-icon.png",
   },
