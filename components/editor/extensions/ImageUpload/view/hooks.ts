@@ -1,14 +1,15 @@
 import { DragEvent, useCallback, useEffect, useRef, useState } from "react";
+require("dotenv").config();
 import { toast } from "@/components/ui/use-toast";
 import { API } from "@/lib/api";
 import { randomUUID } from "crypto";
 // import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 // import { Database } from "@/lib/supabase/types"
-import ImageKit from "imagekit";
 import { convertImageToBase64 } from "@/lib/utils";
+import ImageKit from "imagekit";
 // import fs from "fs";
 
-var imagekit = new ImageKit({
+export const imageKitClient = new ImageKit({
   publicKey: process.env.NEXT_PUBLIC_IMAGE_KIT_KEY!,
   privateKey: "private_TFNli8KOHERe9cYlBLrrk3jvr6o=",
   urlEndpoint: process.env.NEXT_PUBLIC_IMAGE_KIT_URL!,
@@ -32,7 +33,7 @@ export const useUploader = ({
         const type = file.type.split("/")[1];
         console.log({ type });
         const base64 = await convertImageToBase64(file);
-        const results = await imagekit.upload({
+        const results = await imageKitClient.upload({
           file: base64,
           fileName: `${id}.${type}`,
         });

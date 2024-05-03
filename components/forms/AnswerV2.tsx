@@ -80,49 +80,49 @@ const Answer = ({
     }
   };
 
-  const generateAIAnswer = async () => {
-    if (!authorId) return;
+  // const generateAIAnswer = async () => {
+  //   if (!authorId) return;
 
-    setIsSubmittingAi(true);
+  //   setIsSubmittingAi(true);
 
-    const options = {
-      wordwrap: 130,
-      // ...
-    };
-    const questionString = convert(questionDescription, options);
+  //   const options = {
+  //     wordwrap: 130,
+  //     // ...
+  //   };
+  //   const questionString = convert(questionDescription, options);
 
-    const ques = question + " " + questionString;
+  //   const ques = question + " " + questionString;
 
-    console.log({ ques });
+  //   console.log({ ques });
 
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
-        {
-          method: "POST",
-          body: JSON.stringify({ question: ques }),
-        }
-      );
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
+  //       {
+  //         method: "POST",
+  //         body: JSON.stringify({ question: ques }),
+  //       }
+  //     );
 
-      const aiAnswer = await response.json();
+  //     const aiAnswer = await response.json();
 
-      console.log({ aiAnswer });
+  //     console.log({ aiAnswer });
 
-      // Todo: Convert plain text to HTML format.
+  //     // Todo: Convert plain text to HTML format.
 
-      const formatAnswer = formatChatGPTResponseToHtml(aiAnswer.reply);
+  //     const formatAnswer = formatChatGPTResponseToHtml(aiAnswer.reply);
 
-      console.log({ formatAnswer });
+  //     console.log({ formatAnswer });
 
-      setContent(formatAnswer);
+  //     setContent(formatAnswer);
 
-      // Todo: Add Toast...
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsSubmittingAi(false);
-    }
-  };
+  //     // Todo: Add Toast...
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setIsSubmittingAi(false);
+  //   }
+  // };
 
   return (
     <div className="">
@@ -130,7 +130,7 @@ const Answer = ({
         <h4 className="paragraph-semibold text-dark400_light800">
           Write your answer here
         </h4>
-        <Button
+        {/* <Button
           onClick={generateAIAnswer}
           disabled={isSubmitting}
           className="btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none dark:text-primary-500"
@@ -150,7 +150,7 @@ const Answer = ({
               Generate AI answer
             </>
           )}
-        </Button>
+        </Button> */}
       </div>
       <Form {...form}>
         <form
