@@ -2,11 +2,13 @@ import QuestionCard from "@/components/cards/QuestionCard";
 import NoResult from "@/components/shared/NoResult";
 import Pagination from "@/components/shared/Pagination";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
+import { Button } from "@/components/ui/button";
 import { addKeywords } from "@/constants/metadata";
 import { getQuestionsByTagId, getTagById } from "@/database/actions/tag.action";
 import { slugify } from "@/lib/utils";
 import { URLProps } from "@/types";
 import { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 const TagDetailPage = async ({ params: { slug }, searchParams }: URLProps) => {
@@ -36,8 +38,14 @@ const TagDetailPage = async ({ params: { slug }, searchParams }: URLProps) => {
 
   return (
     <>
-      <h1 className="h1-bold text-dark100_light900">{tagTitle} Questions</h1>
-
+      <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center ">
+        <h1 className="h1-bold text-dark100_light900 capitalize">{tagTitle}</h1>
+        <Link href={`/ask-question`} className="flex justify-end max-sm:w-full">
+          <Button className="primary-gradient min-h-[46px] px-4 py-3 !text-light-900 rounded-[8px]">
+            Ask a Question
+          </Button>
+        </Link>
+      </div>
       <div className="mt-11 w-full">
         <LocalSearchBar
           route={`/tags/${id}`}
