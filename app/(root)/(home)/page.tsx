@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import QuestionCard from "@/components/cards/QuestionCard";
 import NoResult from "@/components/shared/NoResult";
-// import Pagination from "@/components/shared/Pagination";
+import Pagination from "@/components/shared/Pagination";
+
 import {
   getQuestions,
   getRecommendedQuestions,
@@ -101,11 +102,11 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           />
         )}
       </div>
-      <div className="mt-10">
-        {/* <Pagination
+      <div className="mt-10 mb-4">
+        <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={result.isNext}
-        /> */}
+        />
       </div>
     </>
   );

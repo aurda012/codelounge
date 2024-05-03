@@ -35,8 +35,6 @@ export async function createCodeLoungeAIAnswer(
 
   const ques = question + " " + questionString;
 
-  console.log({ ques });
-
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
@@ -47,8 +45,6 @@ export async function createCodeLoungeAIAnswer(
     );
 
     const aiAnswer = await response.json();
-
-    console.log({ aiAnswer });
 
     // Todo: Convert plain text to HTML format.
 

@@ -26,18 +26,18 @@ export const useUploader = ({
   const uploadFile = useCallback(
     async (file: File) => {
       setLoading(true);
-      console.log("On Upload File", file);
+      // console.log("On Upload File", file);
       try {
         let filePath = "";
         const id = Math.random().toString(36).substring(0, 18);
         const type = file.type.split("/")[1];
-        console.log({ type });
+        // console.log({ type });
         const base64 = await convertImageToBase64(file);
         const results = await imageKitClient.upload({
           file: base64,
           fileName: `${id}.${type}`,
         });
-        console.log({ results });
+        // console.log({ results });
         const url = results.url;
 
         onUpload(url);

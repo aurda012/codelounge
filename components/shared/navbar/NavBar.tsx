@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 // import GlobalSearch from "../search/GlobalSearch";
 import MobileNav from "./MobileNav";
+import NavDarkMode from "./nav-dark-mode";
 
 const NavBar = () => {
   const { theme } = useTheme();
@@ -22,6 +23,7 @@ const NavBar = () => {
       </Link>
       {/* <GlobalSearch /> */}
       <div className="flex-between gap-5">
+        <NavDarkMode />
         <SignedIn>
           <UserButton
             afterSignOutUrl="/"

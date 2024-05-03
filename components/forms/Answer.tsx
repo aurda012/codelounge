@@ -83,7 +83,7 @@ const Answer = ({ authorId, question, questionId }: Props) => {
 
       const aiAnswer = await response.json();
 
-      console.log({ aiAnswer });
+      // console.log({ aiAnswer });
 
       // Todo: Convert plain text to HTML format.
 

@@ -18,7 +18,7 @@ export const IndentExtension = Extension.create({
 
           const textNode = $from?.doc?.content?.content[0]?.content?.content[0];
           if (textNode && textNode.text) {
-            console.log("DELETED ORIGINAL");
+            // console.log("DELETED ORIGINAL");
             // here we use tr.mapping.map to map the position between transaction steps
             const from = tr.mapping.map($from.pos);
             const to = tr.mapping.map($to.pos);
@@ -44,14 +44,14 @@ export const IndentExtension = Extension.create({
           // Get the current block and check if it is a code block
           const nodeOffset = $from?.textOffset;
           const nodeContent = $from?.parent?.textContent;
-          console.log({ nodeOffset, nodeContent });
+          // console.log({ nodeOffset, nodeContent });
 
           if (nodeContent) {
             // Check for whitespace at end of node
             const nodeEndOffset =
               $from?.parent?.textContent.length -
               $from?.parent?.textContent.trimEnd().length;
-            console.log({ nodeEndOffset });
+            // console.log({ nodeEndOffset });
             if (nodeEndOffset > 0) {
               tr.delete(nodeContent.length - nodeEndOffset, nodeContent.length);
             }
@@ -69,7 +69,7 @@ export const IndentExtension = Extension.create({
               (line: string) => {
                 if (linesCharCount <= selectedCount) {
                   const indented = " ".repeat(indentLevel) + line;
-                  console.log({ indented });
+                  // console.log({ indented });
                   indentCount += indentLevel;
                   linesCharCount += line.length + 2;
                   return indented;
@@ -80,11 +80,11 @@ export const IndentExtension = Extension.create({
             );
             let indentedText = splitIntoLinesIndented.join("\n").trimEnd();
             if (selectedCount === 0) {
-              console.log("Selected None");
+              // console.log("Selected None");
               indentedText = indentedText.slice(0, to - from + indentCount);
             }
             if (selectedCount < nodeContent.trim().length) {
-              console.log("Selected Some");
+              // console.log("Selected Some");
               indentedText = indentedText.slice(
                 0,
                 to - from + indentCount + nodeOffset
@@ -96,7 +96,7 @@ export const IndentExtension = Extension.create({
               selectedCount !== 0 &&
               selectedCount <= nodeContent.trim().length
             ) {
-              console.log("Selected Some or All");
+              // console.log("Selected Some or All");
               tr.delete(
                 from - nodeOffset + indentedText.length,
                 from + indentedText.length
@@ -126,7 +126,7 @@ export const IndentExtension = Extension.create({
           const nodeOffset = $from?.textOffset;
           const nodeContent = $from?.parent?.textContent;
           const nodePos = $from?.pos;
-          console.log({ nodeOffset, nodeContent, nodePos });
+          // console.log({ nodeOffset, nodeContent, nodePos });
 
           if (nodeContent) {
             tr.delete(nodePos, nodePos + nodeContent.length - nodeOffset);
@@ -160,25 +160,25 @@ export const IndentExtension = Extension.create({
             );
             let outdentedText = splitIntoLinesOutdented.join("\n").trimEnd();
             if (selectedCount === 0) {
-              console.log("Selected None");
+              // console.log("Selected None");
             }
             if (selectedCount < nodeContent.trim().length) {
-              console.log("Selected Some");
+              // console.log("Selected Some");
             }
             tr.insertText(outdentedText, nodePos - nodeOffset);
             if (selectedCount <= nodeContent.trim().length) {
-              console.log("Selected Some or All");
+              // console.log("Selected Some or All");
               // tr.delete(
               //   from - nodeOffset + outdentedText.length,
               //   from + outdentedText.length
               // );
             }
-            console.log({ outdentedText });
+            // console.log({ outdentedText });
             tr.delete(
               nodePos - nodeOffset + outdentedText.length,
               nodePos + outdentedText.length
             );
-            console.log({ tr });
+            // console.log({ tr });
             // if (selectedCount === 0) {
             //   tr.delete(
             //     from + nodeOffset + outdentedText.length,
@@ -188,7 +188,7 @@ export const IndentExtension = Extension.create({
 
             return true;
           } else {
-            console.log("UPDATING INDENT");
+            // console.log("UPDATING INDENT");
             // Indent the code block
             const indent = " ".repeat(indentLevel);
             tr.insertText(indent, from);

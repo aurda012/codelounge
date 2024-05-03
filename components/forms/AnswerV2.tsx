@@ -52,8 +52,6 @@ const Answer = ({
     },
   });
 
-  console.log(JSON.parse(authorId));
-
   const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
     // ? create new answer function.
     try {

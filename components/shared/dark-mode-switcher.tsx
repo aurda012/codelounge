@@ -3,14 +3,17 @@
 import { Surface } from "../ui/Surface";
 import { Toolbar } from "../ui/Toolbar";
 import { Icon } from "../ui/Icon";
-import { createPortal } from "react-dom";
 import { useTheme } from "next-themes";
 
-const DarkModeSwitcher = () => {
+const DarkModeSwitcher = ({ isNav = false }: { isNav?: boolean }) => {
   const { setTheme, theme } = useTheme();
-
-  const Switcher = createPortal(
-    <Surface className="flex items-center gap-1 fixed bottom-4 right-[calc(50vw-41px)] sm:bottom-5 sm:right-6 z-[99999] p-1 rounded-[5px]">
+  return (
+    <Surface
+      className={`flex items-center gap-1 fixed bottom-4 right-[calc(50vw-41px)] ${
+        isNav ? "sm:hidden" : ""
+      }
+    sm:bottom-5 sm:right-6 z-[99999] p-1 rounded-[5px]`}
+    >
       <Toolbar.Button
         onClick={() => setTheme("light")}
         active={theme === "light"}
@@ -25,9 +28,7 @@ const DarkModeSwitcher = () => {
       >
         <Icon name="Moon" />
       </Toolbar.Button>
-    </Surface>,
-    document.body
+    </Surface>
   );
-  return <>{Switcher}</>;
 };
 export default DarkModeSwitcher;

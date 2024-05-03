@@ -19,7 +19,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
           <RightSideBar />
         </div>
         <Toaster />
-        <DarkModeSwitcher />
       </main>
     </ClerkProvider>
   );

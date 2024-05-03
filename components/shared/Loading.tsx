@@ -5,7 +5,6 @@ import Image from "next/image";
 
 export const Loading = ({ message }: { message: string }) => {
   const { theme } = useTheme();
-  console.log("loading component");
   return (
     <div className="z-[9999] fixed top-0 left-0 h-screen w-screen flex flex-col justify-center items-center backdrop-blur-sm bg-white/30 dark:bg-black/30">
       <Image

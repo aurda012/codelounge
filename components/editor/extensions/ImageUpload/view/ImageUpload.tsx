@@ -12,7 +12,6 @@ export const ImageUpload = ({
 }) => {
   const onUpload = useCallback(
     (url: string) => {
-      console.log(url);
       if (url) {
         editor
           .chain()

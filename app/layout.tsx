@@ -3,7 +3,7 @@ import { Inter, Space_Grotesk as SpaceGrotesk } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import React from "react";
 import "./globals.css";
-import "../styles/prism.css";
+import "@/styles/prism.css";
 import { keywords } from "@/constants/metadata";
 
 const inter = Inter({
@@ -52,6 +52,7 @@ export const metadata: Metadata = {
     images: ["https://codelounge.vercel.app/images/og-image-1200x628.png"], // Must be an absolute URL
   },
   icons: {
+    icon: "/images/site-logo.svg",
     shortcut: "/images/favicon-32x32.png",
     apple: "/images/apple-touch-icon.png",
   },
@@ -90,14 +91,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        suppressHydrationWarning={true}
         className={`${inter.variable} ${spaceGrotesk.variable} custom-scrollbar`}
+        suppressHydrationWarning={true}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          // disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="dark">
           {children}
         </ThemeProvider>
       </body>

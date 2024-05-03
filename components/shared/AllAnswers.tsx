@@ -33,7 +33,6 @@ const AllAnswers = async ({
     sortBy: filter,
     page,
   });
-  console.log(result.answers);
   return (
     <div className="mt-11">
       <div className="flex items-center justify-between">
