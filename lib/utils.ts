@@ -1,6 +1,8 @@
 import qs from "query-string";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { lowlight } from "lowlight";
+import { toHtml } from "hast-util-to-html";
 
 import { BADGE_CRITERIA, CURRENCY_NOTATIONS } from "@/constants";
 import { JobPageFilters } from "@/constants/filters";
@@ -21,6 +23,84 @@ import { Link } from "@/components/editor/extensions/Link";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+function wrapCodeBlocks(str: string) {
+  const codeBlockRegex = /\`([^`]+)\`/g;
+  return str.replace(codeBlockRegex, (match, codeBlock) => {
+    return `<code class="tiptap-code">${codeBlock}</code>`;
+  });
+}
+
+export function formatChatGPTResponseToHtml(response: string) {
+  const lines = response.split("\n");
+
+  let isCodeFilter = false;
+
+  const filterEmptySpaces = lines.filter((line) => {
+    if (line.startsWith("```")) {
+      if (isCodeFilter && line === "```") {
+        isCodeFilter = false;
+        return true;
+      } else {
+        isCodeFilter = true;
+        return true;
+      }
+    }
+    if (isCodeFilter) {
+      return true;
+    } else {
+      if (line === "") {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  });
+
+  let isCode = false;
+  let lang = "";
+  let firstCodeLine = false;
+
+  const html = filterEmptySpaces.map((line) => {
+    if (line.startsWith("```")) {
+      if (isCode && line === "```") {
+        isCode = false;
+        firstCodeLine = false;
+        return "</code></pre>";
+      } else {
+        isCode = true;
+        firstCodeLine = true;
+        lang = line.slice(3);
+        return `<pre><code class="language-${lang}">`;
+      }
+    }
+    if (isCode) {
+      if (line === "") {
+        return `<br />`;
+      } else if (lang === "") {
+        const tree = lowlight.highlightAuto(line);
+        const code = `${firstCodeLine ? "" : "<br />"}${toHtml(tree)}`;
+        if (firstCodeLine) firstCodeLine = false;
+        return code;
+      } else {
+        const tree = lowlight.highlight(lang, line);
+        const code = `${firstCodeLine ? "" : "<br />"}${toHtml(tree)}`;
+        if (firstCodeLine) firstCodeLine = false;
+        return code;
+      }
+    } else {
+      if (line === "") {
+        return null;
+      }
+      const codeWrappedLine = wrapCodeBlocks(line);
+      return `<p class="tiptap-paragraph">${codeWrappedLine}</p>`;
+    }
+  });
+
+  const string = html.join("");
+  //   return JSON.stringify(string);
+  return string;
 }
 
 export function convertImageToBase64(file: File) {

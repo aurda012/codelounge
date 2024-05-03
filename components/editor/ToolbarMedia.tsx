@@ -236,7 +236,7 @@ export function ToolbarMedia({ editor }: Props) {
           e.preventDefault();
           editor.chain().focus().setImageUpload().run();
         }}
-        disabled={!editor.can().chain().setImage({ src: "" }).run()}
+        disabled={!editor.can().chain().setImageUpload().run()}
         data-active={editor.isActive("image") ? "is-active" : undefined}
         aria-label="Image"
       >

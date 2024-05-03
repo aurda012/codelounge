@@ -89,6 +89,9 @@ div.tiptap.ProseMirror[contenteditable="false"] {
   ul {
     @apply min-w-full mx-0;
   }
+  pre {
+    @apply break-words;
+  }
 }
 
 div.tiptap.ProseMirror[contenteditable="true"] {
@@ -99,6 +102,9 @@ div.tiptap.ProseMirror[contenteditable="true"] {
   ol,
   ul {
     @apply min-w-full mx-0;
+  }
+  pre {
+    @apply overflow-x-auto;
   }
 }
 

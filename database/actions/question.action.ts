@@ -62,6 +62,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
 
     revalidatePath(path);
+    return JSON.parse(JSON.stringify(question));
   } catch (error) {
     console.log(error);
     throw error;

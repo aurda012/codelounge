@@ -110,7 +110,8 @@ const QuestionDetailPage = async ({
       />
       {mongoUser && (
         <Answer
-          question={question.content}
+          question={question.title}
+          questionDescription={question.content}
           questionId={JSON.stringify(question._id)}
           authorId={JSON.stringify(mongoUser)}
         />

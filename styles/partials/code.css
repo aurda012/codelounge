@@ -33,7 +33,6 @@
 }
 
 .ProseMirror pre code {
-  overflow-x: scroll;
   background-color: inherit;
   padding: 0;
   color: inherit;
@@ -41,7 +40,6 @@
   --tw-shadow-colored: 0 0 #0000;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  @apply max-w-full;
 }
 
 .ProseMirror pre .hljs {

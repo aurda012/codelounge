@@ -33,6 +33,7 @@ const AllAnswers = async ({
     sortBy: filter,
     page,
   });
+  console.log(result.answers);
   return (
     <div className="mt-11">
       <div className="flex items-center justify-between">
@@ -79,6 +80,7 @@ const AllAnswers = async ({
                     <EditDeleteAction
                       type="answer"
                       itemId={JSON.stringify(answer._id)}
+                      questionId={JSON.parse(questionId)}
                     />
                   )}
                 </SignedIn>

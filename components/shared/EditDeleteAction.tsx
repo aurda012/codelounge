@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 interface Props {
   type: string;
   itemId: string;
+  questionId?: string;
 }
 
 const EditDeleteAction = ({ type, itemId }: Props) => {
@@ -26,6 +27,7 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
       await deleteAnswer({
         answerId: JSON.parse(itemId),
         path: pathname,
+        questionId: JSON.parse(itemId),
       });
     }
   };

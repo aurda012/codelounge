@@ -6,7 +6,7 @@ import { Editor } from "@tiptap/react";
 
 import { Toolbar } from "@/components/ui/Toolbar";
 import { Icon } from "@/components/ui/Icon";
-import { ImageBlockWidth } from "./ImageBlockWidth";
+import { ImageBlockWidth } from "../ImageBlock/components/ImageBlockWidth";
 
 export interface MenuProps {
   editor: Editor;
@@ -14,15 +14,12 @@ export interface MenuProps {
   shouldHide?: boolean;
 }
 
-export const ImageBlockMenu = ({
-  editor,
-  appendTo,
-}: MenuProps): JSX.Element => {
+export const ImageMenu = ({ editor, appendTo }: MenuProps): JSX.Element => {
   const menuRef = useRef<HTMLDivElement>(null);
   const tippyInstance = useRef<Instance | null>(null);
 
   const shouldShow = useCallback(() => {
-    const isActive = editor.isActive("imageBlock");
+    const isActive = editor.isActive("image");
 
     return isActive;
   }, [editor]);
@@ -31,7 +28,7 @@ export const ImageBlockMenu = ({
     editor
       .chain()
       .focus(undefined, { scrollIntoView: false })
-      .setImageBlockAlign("left")
+      .setImageAlign("left")
       .run();
   }, [editor]);
 
@@ -39,7 +36,7 @@ export const ImageBlockMenu = ({
     editor
       .chain()
       .focus(undefined, { scrollIntoView: false })
-      .setImageBlockAlign("center")
+      .setImageAlign("center")
       .run();
   }, [editor]);
 
@@ -47,7 +44,7 @@ export const ImageBlockMenu = ({
     editor
       .chain()
       .focus(undefined, { scrollIntoView: false })
-      .setImageBlockAlign("right")
+      .setImageAlign("right")
       .run();
   }, [editor]);
 
@@ -56,7 +53,7 @@ export const ImageBlockMenu = ({
       editor
         .chain()
         .focus(undefined, { scrollIntoView: false })
-        .setImageBlockWidth(value)
+        .setImageWidth(value)
         .run();
     },
     [editor]
@@ -65,7 +62,7 @@ export const ImageBlockMenu = ({
   return (
     <BaseBubbleMenu
       editor={editor}
-      pluginKey={`imageBlockMenu`}
+      pluginKey={`imageMenu`}
       shouldShow={shouldShow}
       updateDelay={0}
       tippyOptions={{
@@ -86,7 +83,7 @@ export const ImageBlockMenu = ({
       <Toolbar.Wrapper shouldShowContent={shouldShow()} ref={menuRef}>
         <Toolbar.Button
           tooltip="Align image left"
-          active={editor.isActive("imageBlock", { align: "left" })}
+          active={editor.isActive("image", { align: "left" })}
           onClick={(e) => {
             e.preventDefault();
             onAlignImageLeft;
@@ -96,7 +93,7 @@ export const ImageBlockMenu = ({
         </Toolbar.Button>
         <Toolbar.Button
           tooltip="Align image center"
-          active={editor.isActive("imageBlock", { align: "center" })}
+          active={editor.isActive("image", { align: "center" })}
           onClick={(e) => {
             e.preventDefault();
             onAlignImageCenter;
@@ -106,7 +103,7 @@ export const ImageBlockMenu = ({
         </Toolbar.Button>
         <Toolbar.Button
           tooltip="Align image right"
-          active={editor.isActive("imageBlock", { align: "right" })}
+          active={editor.isActive("image", { align: "right" })}
           onClick={(e) => {
             e.preventDefault();
             onAlignImageRight;
@@ -117,11 +114,11 @@ export const ImageBlockMenu = ({
         <Toolbar.Divider />
         <ImageBlockWidth
           onChange={onWidthChange}
-          value={parseInt(editor.getAttributes("imageBlock").width)}
+          value={parseInt(editor.getAttributes("image").width)}
         />
       </Toolbar.Wrapper>
     </BaseBubbleMenu>
   );
 };
 
-export default ImageBlockMenu;
+export default ImageMenu;

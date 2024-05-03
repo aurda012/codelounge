@@ -12,6 +12,59 @@ import {
   DeleteAnswerParams,
   GetAnswersParams,
 } from "./shared.types";
+import { convert } from "html-to-text";
+import { formatChatGPTResponseToHtml } from "@/lib/utils";
+
+interface CreateCodeLoungeAIAnswerParams {
+  questionId: string;
+  question: string;
+  questionDescription: string;
+  path: string;
+}
+
+export async function createCodeLoungeAIAnswer(
+  params: CreateCodeLoungeAIAnswerParams
+) {
+  const { questionId, question, questionDescription, path } = params;
+
+  const options = {
+    wordwrap: 130,
+    // ...
+  };
+  const questionString = convert(questionDescription, options);
+
+  const ques = question + " " + questionString;
+
+  console.log({ ques });
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
+      {
+        method: "POST",
+        body: JSON.stringify({ question: ques }),
+      }
+    );
+
+    const aiAnswer = await response.json();
+
+    console.log({ aiAnswer });
+
+    // Todo: Convert plain text to HTML format.
+
+    const formatAnswer = formatChatGPTResponseToHtml(aiAnswer.reply);
+
+    await createAnswer({
+      content: formatAnswer,
+      author: "663413595e19becc4cd14250",
+      question: questionId,
+      path: path,
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {
@@ -219,7 +272,7 @@ export async function deleteAnswer(params: DeleteAnswerParams) {
   try {
     await connectToDatabase();
 
-    const { answerId, path } = params;
+    const { answerId, path, questionId } = params;
 
     const answer = await Answer.findById(answerId);
 
@@ -229,10 +282,9 @@ export async function deleteAnswer(params: DeleteAnswerParams) {
 
     await Answer.deleteOne({ _id: answerId });
 
-    await Question.updateMany(
-      { question: answerId },
-      { $pull: { answers: answerId } }
-    );
+    await Question.findByIdAndUpdate(answer.question, {
+      $pull: { answers: answerId },
+    });
 
     await Interaction.deleteMany({ answer: answerId });
 

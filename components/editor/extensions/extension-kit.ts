@@ -1,6 +1,6 @@
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Highlight from "@tiptap/extension-highlight";
-import Image from "@tiptap/extension-image";
+import { Image } from "./Image";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import TaskList from "@tiptap/extension-task-list";
@@ -16,6 +16,7 @@ import { Link } from "./Link";
 // import { IndentExtension } from "./Indent";
 import { IndentExtension } from "./Indent/indent-v2";
 import API from "@/lib/api";
+import { Selection } from "./Selection";
 
 export const ExtensionKit = [
   StarterKit.configure({
@@ -71,11 +72,6 @@ export const ExtensionKit = [
   History.configure({
     depth: 20,
   }),
-  Image.configure({
-    HTMLAttributes: {
-      class: "tiptap-image",
-    },
-  }),
   Link.configure({
     openOnClick: false,
     HTMLAttributes: {
@@ -98,6 +94,7 @@ export const ExtensionKit = [
   IndentExtension,
   Typography,
   ImageUpload,
+  Image,
   ImageBlock,
   FileHandler.configure({
     allowedMimeTypes: ["image/png", "image/jpeg", "image/gif", "image/webp"],
@@ -109,7 +106,7 @@ export const ExtensionKit = [
       });
     },
     onPaste: (currentEditor, files) => {
-      files.forEach(async () => {
+      files.forEach(async (file) => {
         const url = await API.uploadImage();
 
         return currentEditor
@@ -123,4 +120,5 @@ export const ExtensionKit = [
       });
     },
   }),
+  Selection,
 ];

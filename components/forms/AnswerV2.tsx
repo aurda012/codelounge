@@ -1,14 +1,13 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { createAnswer } from "@/database/actions/answer.action";
 import { AnswerSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Editor } from "@tinymce/tinymce-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { convert } from "html-to-text";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import {
@@ -24,14 +23,27 @@ import TextEditor from "../editor/TextEditor";
 interface Props {
   authorId: string;
   question: string;
+  questionDescription: string;
   questionId: string;
 }
 
-const Answer = ({ authorId, question, questionId }: Props) => {
+// Note: please restart the page if syntax highlighting works bad.
+import { lowlight } from "lowlight";
+import { toHtml } from "hast-util-to-html";
+import { formatChatGPTResponseToHtml } from "@/lib/utils";
+
+const response = "";
+
+const Answer = ({
+  authorId,
+  question,
+  questionDescription,
+  questionId,
+}: Props) => {
   const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmittingAi, setIsSubmittingAi] = useState<boolean>(false);
-  const { theme } = useTheme();
+  const [content, setContent] = useState(response);
   const editorRef = useRef(null);
   const form = useForm<z.infer<typeof AnswerSchema>>({
     resolver: zodResolver(AnswerSchema),
@@ -39,6 +51,8 @@ const Answer = ({ authorId, question, questionId }: Props) => {
       answer: "",
     },
   });
+
+  console.log(JSON.parse(authorId));
 
   const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
     // ? create new answer function.
@@ -58,10 +72,7 @@ const Answer = ({ authorId, question, questionId }: Props) => {
 
       form.reset();
 
-      if (editorRef.current) {
-        const editor = editorRef.current as any;
-        editor.setContent("");
-      }
+      setContent("<p></p>");
     } catch (error) {
       console.log(error);
     } finally {
@@ -73,12 +84,23 @@ const Answer = ({ authorId, question, questionId }: Props) => {
     if (!authorId) return;
 
     setIsSubmittingAi(true);
+
+    const options = {
+      wordwrap: 130,
+      // ...
+    };
+    const questionString = convert(questionDescription, options);
+
+    const ques = question + " " + questionString;
+
+    console.log({ ques });
+
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
         {
           method: "POST",
-          body: JSON.stringify({ question }),
+          body: JSON.stringify({ question: ques }),
         }
       );
 
@@ -88,12 +110,11 @@ const Answer = ({ authorId, question, questionId }: Props) => {
 
       // Todo: Convert plain text to HTML format.
 
-      const formatAnswer = aiAnswer.reply.replace(/\n/g, "<br/>");
+      const formatAnswer = formatChatGPTResponseToHtml(aiAnswer.reply);
 
-      if (editorRef.current) {
-        const editor = editorRef.current as any;
-        editor.setContent(formatAnswer);
-      }
+      console.log({ formatAnswer });
+
+      setContent(formatAnswer);
 
       // Todo: Add Toast...
     } catch (error) {
@@ -149,7 +170,7 @@ const Answer = ({ authorId, question, questionId }: Props) => {
                 <FormControl className="mt-3.5">
                   <TextEditor
                     onChange={(content) => field.onChange(content)}
-                    content={JSON.parse("[]")}
+                    content={content as any}
                   />
                 </FormControl>
                 <FormMessage className="text-red-500" />

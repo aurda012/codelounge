@@ -6,16 +6,17 @@ import { Toolbar } from "./Toolbar";
 import styles from "./TextEditor.module.css";
 import "@/styles/text-editor.css";
 import "@/styles/index.css";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { LinkMenu } from "./link-menu";
 import { ExtensionKit } from "./extensions/extension-kit";
+import ImageBlockMenu from "./extensions/ImageBlock/components/ImageBlockMenu";
 
 export default function TextEditor({
   onChange,
   content,
 }: {
   onChange: (content: any) => void;
-  content: JSONContent;
+  content: string;
 }) {
   const editorRef = useRef(null);
 
@@ -30,12 +31,17 @@ export default function TextEditor({
         autocapitalize: "off",
       },
     },
-    content,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
     extensions: [...ExtensionKit],
   });
+
+  useEffect(() => {
+    if (editor && (content === "<p></p>" || content.length > 0)) {
+      editor.commands.setContent(content);
+    }
+  }, [content]);
 
   return (
     <div
@@ -48,6 +54,7 @@ export default function TextEditor({
       <div className="flex-1 overflow-y-scroll">
         {editor && <SelectionMenu editor={editor} />}
         {editor && <LinkMenu editor={editor} appendTo={editorRef} />}
+        {editor && <ImageBlockMenu editor={editor} appendTo={editorRef} />}
         <EditorContent
           editor={editor}
           className="relative mx-4 my-3 min-h-[250px]"
