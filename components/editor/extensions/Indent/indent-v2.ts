@@ -1,6 +1,15 @@
 import { Extension } from "@tiptap/core";
 import { split } from "postcss/lib/list";
 
+declare module "@tiptap/core" {
+  interface Commands<ReturnType> {
+    indent: {
+      indent: () => ReturnType;
+      outdent: () => ReturnType;
+    };
+  }
+}
+
 let indentLevel = 2;
 
 export const IndentExtension = Extension.create({
