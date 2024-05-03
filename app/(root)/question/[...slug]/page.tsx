@@ -6,23 +6,31 @@ import { redirect } from "next/navigation";
 
 import Metric from "@/components/shared/Metric";
 import Votes from "@/components/shared/Votes";
-import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
 import AllAnswers from "@/components/shared/AllAnswers";
 import Answer from "@/components/forms/AnswerV2";
 import { ITag } from "@/database/models/tag.model";
 import { getQuestionById } from "@/database/actions/question.action";
 import { getUserById } from "@/database/actions/user.action";
-import { getFormattedNumber, getTimestamp } from "@/lib/utils";
+import { getFormattedNumber, getTimestamp, slugify } from "@/lib/utils";
 import { URLProps } from "@/types";
 import { addKeywords } from "@/constants/metadata";
 import ReadTextEditor from "@/components/editor/ReadTextEditor";
 
 const QuestionDetailPage = async ({
-  params: { id },
+  params: { slug },
   searchParams,
 }: URLProps) => {
-  const { question } = await getQuestionById({ questionId: id });
+  const [id, title] = slug;
+  console.log({ title });
+  const { question } = await getQuestionById({
+    questionId: id,
+  });
+  const slugTitle = slugify(question.title);
+  if (title !== slugTitle) {
+    redirect(`/question/${id}/${slugTitle}`);
+  }
+  console.log(slugTitle);
   const { userId: clerkId } = auth();
 
   let mongoUser;
@@ -123,23 +131,32 @@ const QuestionDetailPage = async ({
 export default QuestionDetailPage;
 
 export async function generateMetadata(
-  { params: { id } }: URLProps,
+  { params: { slug } }: URLProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // read route params
-
+  const [id] = slug;
   // fetch data
   const { question } = await getQuestionById({
     questionId: id,
   });
   // construct description based on user data
-  const description = `Find answers and discussions about the question "${question.title}" on CodeLounge.`;
+  const description = `Find answers about "${question.title}".`;
   const keys = question.tags.map((tag: any) => tag.name);
   const keywords = await addKeywords(keys);
 
   return {
     title: `${question.title} | CodeLounge`,
     description,
-    keywords: keys,
+    keywords: keywords,
+    openGraph: {
+      title: `${question.title} | CodeLounge`,
+      description,
+      url: `https://codelounge.vercel.app/question/${id}`,
+    },
+    twitter: {
+      title: `${question.title} | CodeLounge`,
+      description,
+    },
   };
 }

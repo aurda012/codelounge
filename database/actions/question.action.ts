@@ -16,7 +16,8 @@ import {
 } from "./shared.types";
 import Answer from "@/database/models/answer.model";
 import Interaction from "@/database/models/interaction.model";
-import { FilterQuery } from "mongoose";
+import mongoose, { FilterQuery } from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
 
 export async function createQuestion(params: CreateQuestionParams) {
   try {
@@ -127,6 +128,7 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
   try {
     await connectToDatabase();
     const { questionId } = params;
+
     const question = await Question.findById(questionId)
       .populate({
         path: "tags",

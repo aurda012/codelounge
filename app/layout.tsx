@@ -24,13 +24,13 @@ export const metadata: Metadata = {
   referrer: "origin-when-cross-origin",
   title: "CodeLounge",
   description:
-    "Welcome to CodeLounge, the go-to destination for programming enthusiasts and developers. A community-driven platform for discovering and sharing programming knowledge with fellow developers. Find answers to your coding problems, ask questions, engage with a vibrant community, explore comprehensive tutorials, and collaborate on innovative projects. Join the community today!",
+    "Find answers to your coding problems. CodeLounge is a community-driven platform designed to empower developers worldwide. Ask questions, engage with the community and collaborate on projects.",
   keywords: keywords,
   metadataBase: new URL("https://codelounge.vercel.app"),
   openGraph: {
     title: "CodeLounge",
     description:
-      "Welcome to CodeLounge, the go-to destination for programming enthusiasts and developers. A community-driven platform for discovering and sharing programming knowledge with fellow developers. Find answers to your coding problems, ask questions, engage with a vibrant community, explore comprehensive tutorials, and collaborate on innovative projects. Join the community today!",
+      "Find answers to your coding problems. CodeLounge is a community-driven platform designed to empower developers worldwide. Ask questions, engage with the community and collaborate on projects.",
     url: "https://codelounge.vercel.app",
     siteName: "CodeLounge",
     images: [
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CodeLounge",
     description:
-      "Welcome to CodeLounge, the go-to destination for programming enthusiasts and developers. A community-driven platform for discovering and sharing programming knowledge with fellow developers. Find answers to your coding problems, ask questions, engage with a vibrant community, explore comprehensive tutorials, and collaborate on innovative projects. Join the community today!",
+      "Find answers to your coding problems. CodeLounge is a community-driven platform designed to empower developers worldwide. Ask questions, engage with the community and collaborate on projects.",
     images: ["https://codelounge.vercel.app/images/og-image-1200x628.png"], // Must be an absolute URL
   },
   icons: {
@@ -70,10 +70,10 @@ export const metadata: Metadata = {
     yandex: "yandex",
     yahoo: "yahoo",
     other: {
-      me: ["my-email", "my-link"],
+      me: ["my-link"],
     },
   },
-  category: "programming",
+  category: "software development",
 };
 
 export const viewport: Viewport = {

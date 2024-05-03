@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/Metric";
-import { getFormattedNumber, getTimestamp } from "@/lib/utils";
+import { getFormattedNumber, getTimestamp, slugify } from "@/lib/utils";
 import { SignedIn } from "@clerk/nextjs";
 import EditDeleteAction from "../shared/EditDeleteAction";
 
@@ -42,6 +42,7 @@ const QuestionCard = ({
   createdAt,
 }: Props) => {
   const showActionButtons = clerkId && clerkId === author.clerkId;
+  const slugTitle = slugify(title);
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -49,7 +50,7 @@ const QuestionCard = ({
           <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
             {getTimestamp(createdAt)}
           </span>
-          <Link href={`/question/${_id}`}>
+          <Link href={`/question/${_id}/${slugTitle}`}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
               {title}
             </h3>

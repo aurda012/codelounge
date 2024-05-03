@@ -20,7 +20,7 @@ import { keywords } from "@/constants/metadata";
 export const metadata: Metadata = {
   title: "Home | CodeLounge",
   description:
-    "CodeLounge is an inclusive, community-driven platform designed to empower developers and programming enthusiasts worldwide. Find answers to your coding problems, ask questions, engage with a vibrant community, explore comprehensive tutorials, and collaborate on innovative projects. Our mission is to provide a space where programmers can learn, share, and collaborate on coding projects while fostering a culture of support, mentorship, and growth. We believe that by coming together, we can create a more diverse and inclusive tech ecosystem that benefits everyone",
+    "Find answers to your coding problems. CodeLounge is a community-driven platform designed to empower developers worldwide. Ask questions, engage with the community and collaborate on projects.",
   keywords: keywords,
 };
 

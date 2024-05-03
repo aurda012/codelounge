@@ -8,7 +8,7 @@ import { keywords } from "@/constants/metadata";
 export const metadata: Metadata = {
   title: "Ask a Question | CodeLounge",
   description:
-    "Ready to get answers? Ask your coding questions and get help from the vibrant community of over 1,000,000 developers on CodeLounge. Whether it's about a specific framework, a programming language, or a coding challenge, our community is here to assist you.",
+    "Ready to get answers? Ask your coding questions and get help from the CodeLounge AI and the developer community",
   keywords: keywords,
 };
 

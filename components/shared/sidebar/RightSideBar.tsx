@@ -4,6 +4,7 @@ import Image from "next/image";
 import RenderTag from "../RenderTag";
 import { getHotQuestions } from "@/database/actions/question.action";
 import { getPopularTags } from "@/database/actions/tag.action";
+import { slugify } from "@/lib/utils";
 
 const RightSideBar = async () => {
   const topQuestions = await getHotQuestions();
@@ -18,7 +19,7 @@ const RightSideBar = async () => {
           {topQuestions.map((question) => (
             <Link
               key={question._id}
-              href={`/question/${question._id}`}
+              href={`/question/${question._id}/${slugify(question.title)}`}
               className="flex cursor-pointer  items-center justify-between gap-7"
             >
               <p className="body-medium text-dark500_light700">
