@@ -1,8 +1,11 @@
 import QuestionCard from "@/components/cards/QuestionCard";
+import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
 import Pagination from "@/components/shared/Pagination";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
+import TagFilters from "@/components/tag/TagFilters";
 import { Button } from "@/components/ui/button";
+import { TagQuestionsFilter } from "@/constants/filters";
 import { addKeywords } from "@/constants/metadata";
 import { getQuestionsByTagId, getTagById } from "@/database/actions/tag.action";
 import { slugify } from "@/lib/utils";
@@ -28,6 +31,7 @@ const TagDetailPage = async ({ params: { slug }, searchParams }: URLProps) => {
   const { tagTitle, questions, isNext } = await getQuestionsByTagId({
     tagId: id,
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
     page: searchParams?.page ? +searchParams.page : 1,
   });
 
@@ -46,7 +50,7 @@ const TagDetailPage = async ({ params: { slug }, searchParams }: URLProps) => {
           </Button>
         </Link>
       </div>
-      <div className="mt-11 w-full">
+      <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchBar
           route={`/tags/${id}`}
           iconPosition="left"
@@ -54,7 +58,13 @@ const TagDetailPage = async ({ params: { slug }, searchParams }: URLProps) => {
           placeholder="Search for questions"
           otherClasses="flex-1"
         />
+        <Filter
+          filters={TagQuestionsFilter}
+          otherClasses="min-h-[56px] sm:min-w-[170px]"
+          containerClasses="hidden max-md:flex"
+        />
       </div>
+      <TagFilters />
       <div className="mt-10 flex w-full flex-col gap-6 ">
         {questions.length > 0 ? (
           questions.map((question: any) => (
@@ -81,7 +91,7 @@ const TagDetailPage = async ({ params: { slug }, searchParams }: URLProps) => {
           />
         )}
       </div>
-      <div className="mt-10">
+      <div className="mt-10 mb-4">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={isNext}

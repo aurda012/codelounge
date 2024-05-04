@@ -28,6 +28,13 @@ export const TagFilters: FilterProps[] = [
   { name: "Old", value: "old" },
 ];
 
+export const TagQuestionsFilter: FilterProps[] = [
+  { name: "Newest", value: "newest" },
+  { name: "Oldest", value: "oldest" },
+  { name: "Frequent", value: "frequent" },
+  { name: "Unanswered", value: "unanswered" },
+];
+
 export const HomePageFilters: FilterProps[] = [
   { name: "Newest", value: "newest" },
   { name: "Recommended", value: "recommended" },

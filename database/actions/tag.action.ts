@@ -110,20 +110,48 @@ export async function getTagById(params: GetTagByIdParams) {
 export async function getQuestionsByTagId(params: GetQuestionByTagIdParams) {
   try {
     await connectToDatabase();
-    const { tagId, searchQuery, page = 1, pageSize = 10 } = params;
+    const { filter, tagId, searchQuery, page = 1, pageSize = 10 } = params;
 
     const skipAmount = (page - 1) * pageSize;
 
     const tagFilter: FilterQuery<ITag> = { _id: tagId };
 
+    const query: FilterQuery<typeof Question> = {};
+
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { content: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    let sortOptions = {};
+
+    switch (filter) {
+      case "newest":
+        sortOptions = { createdAt: -1 };
+        break;
+      case "oldest":
+        sortOptions = { createdAt: 1 };
+        break;
+      case "frequent":
+        sortOptions = { views: -1 };
+        break;
+
+      case "unanswered":
+        query.answers = { $size: 0 };
+        break;
+
+      default:
+        break;
+    }
+
     const tag = await Tag.findOne(tagFilter).populate({
       path: "questions",
       model: Question,
-      match: searchQuery
-        ? { title: { $regex: searchQuery, $options: "i" } }
-        : {},
+      match: query,
       options: {
-        sort: { createdAt: -1 },
+        sort: sortOptions,
         skip: skipAmount,
         limit: pageSize,
       },
@@ -139,7 +167,11 @@ export async function getQuestionsByTagId(params: GetQuestionByTagIdParams) {
 
     const questions = tag.questions;
 
-    const isNext = questions.length > pageSize;
+    query.tags = { $in: [tag._id] };
+
+    const allQuestions = await Question.countDocuments(query);
+
+    const isNext = allQuestions > pageSize;
 
     return { tagTitle: tag.name, questions, isNext };
   } catch (error) {

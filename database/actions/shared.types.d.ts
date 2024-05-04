@@ -164,6 +164,7 @@ export interface GetQuestionByTagIdParams
     OptionalPageSize,
     OptionalSearch {
   tagId: string;
+  filter?: string;
 }
 
 export interface GetTagByIdParams {
