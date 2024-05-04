@@ -33,6 +33,7 @@ import { toast } from "../ui/use-toast";
 import TextEditor from "../editor/TextEditor";
 import { createCodeLoungeAIAnswer } from "@/database/actions/answer.action";
 import { Loading } from "../shared/Loading";
+import ShortcutsMenu from "../editor/ShortcutsMenu";
 
 interface Props {
   mongoUserId: string;
@@ -198,10 +199,13 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
             name="explanation"
             render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3">
-                <FormLabel className="paragraph-semibold text-dark400_light800">
-                  Detailed explanation of your problem{" "}
-                  <span className="text-primary-500">*</span>
-                </FormLabel>
+                <div className="flex flex-row items-center justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
+                  <FormLabel className="paragraph-semibold text-dark400_light800">
+                    Detailed explanation of your problem{" "}
+                    <span className="text-primary-500">*</span>
+                  </FormLabel>
+                  <ShortcutsMenu />
+                </div>
                 <FormControl className="mt-3.5">
                   <TextEditor
                     onChange={(content) => field.onChange(content)}

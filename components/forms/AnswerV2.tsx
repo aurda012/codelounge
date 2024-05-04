@@ -31,6 +31,7 @@ interface Props {
 import { lowlight } from "lowlight";
 import { toHtml } from "hast-util-to-html";
 import { formatChatGPTResponseToHtml } from "@/lib/utils";
+import ShortcutsMenu from "../editor/ShortcutsMenu";
 
 const response = "";
 
@@ -78,77 +79,11 @@ const Answer = ({
     }
   };
 
-  // const generateAIAnswer = async () => {
-  //   if (!authorId) return;
-
-  //   setIsSubmittingAi(true);
-
-  //   const options = {
-  //     wordwrap: 130,
-  //     // ...
-  //   };
-  //   const questionString = convert(questionDescription, options);
-
-  //   const ques = question + " " + questionString;
-
-  //   console.log({ ques });
-
-  //   try {
-  //     const response = await fetch(
-  //       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
-  //       {
-  //         method: "POST",
-  //         body: JSON.stringify({ question: ques }),
-  //       }
-  //     );
-
-  //     const aiAnswer = await response.json();
-
-  //     console.log({ aiAnswer });
-
-  //     // Todo: Convert plain text to HTML format.
-
-  //     const formatAnswer = formatChatGPTResponseToHtml(aiAnswer.reply);
-
-  //     console.log({ formatAnswer });
-
-  //     setContent(formatAnswer);
-
-  //     // Todo: Add Toast...
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setIsSubmittingAi(false);
-  //   }
-  // };
-
   return (
     <div className="">
-      <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
-        <h4 className="paragraph-semibold text-dark400_light800">
-          Write your answer here
-        </h4>
-        {/* <Button
-          onClick={generateAIAnswer}
-          disabled={isSubmitting}
-          className="btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none dark:text-primary-500"
-          type="submit"
-        >
-          {isSubmittingAi ? (
-            <>Generating...</>
-          ) : (
-            <>
-              <Image
-                src="/icons/stars.svg"
-                alt="start"
-                width={12}
-                height={12}
-                className="object-contain text-white"
-              />
-              Generate AI answer
-            </>
-          )}
-        </Button> */}
+      <div className="flex flex-row items-center justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
+        <h4 className="paragraph-semibold text-dark400_light800">Answer</h4>
+        <ShortcutsMenu />
       </div>
       <Form {...form}>
         <form
