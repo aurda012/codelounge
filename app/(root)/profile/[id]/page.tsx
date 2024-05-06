@@ -128,7 +128,7 @@ export async function generateMetadata(
   }`;
 
   return {
-    title: `${user.name}'s Profile | Dev Overflow`,
+    title: `${user.name}'s Profile | CodeLounge`,
     description,
   };
 }
