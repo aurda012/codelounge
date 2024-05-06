@@ -22,6 +22,14 @@ interface CreateCodeLoungeAIAnswerParams {
   path: string;
 }
 
+interface EditCodeLoungeAIAnswerParams {
+  answerId: string;
+  questionId: string;
+  question: string;
+  questionDescription: string;
+  path: string;
+}
+
 export async function createCodeLoungeAIAnswer(
   params: CreateCodeLoungeAIAnswerParams
 ) {
@@ -56,6 +64,46 @@ export async function createCodeLoungeAIAnswer(
       question: questionId,
       path: path,
     });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function editCodeLoungeAIAnswer(
+  params: EditCodeLoungeAIAnswerParams
+) {
+  const { answerId, question, questionDescription } = params;
+
+  const answer = await Answer.findById(answerId);
+
+  const options = {
+    wordwrap: 130,
+    // ...
+  };
+  const questionString = convert(questionDescription, options);
+
+  const ques = question + " " + questionString;
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
+      {
+        method: "POST",
+        body: JSON.stringify({ question: ques }),
+      }
+    );
+
+    const aiAnswer = await response.json();
+
+    // Todo: Convert plain text to HTML format.
+
+    const formatAnswer = formatChatGPTResponseToHtml(aiAnswer.reply);
+
+    answer.content = formatAnswer;
+    answer.createdAt = new Date();
+
+    await answer.save();
   } catch (error) {
     console.log(error);
     throw error;

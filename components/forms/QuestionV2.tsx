@@ -1,7 +1,6 @@
 "use client";
 
-import { Editor } from "@tinymce/tinymce-react";
-import { KeyboardEvent, useRef, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,7 +18,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { useTheme } from "next-themes";
 import {
   createQuestion,
   editQuestion,
@@ -31,7 +29,10 @@ import { Badge } from "../ui/badge";
 import { ITag } from "@/database/models/tag.model";
 import { toast } from "../ui/use-toast";
 import TextEditor from "../editor/TextEditor";
-import { createCodeLoungeAIAnswer } from "@/database/actions/answer.action";
+import {
+  createCodeLoungeAIAnswer,
+  editCodeLoungeAIAnswer,
+} from "@/database/actions/answer.action";
 import { Loading } from "../shared/Loading";
 import ShortcutsMenu from "../editor/ShortcutsMenu";
 
@@ -42,15 +43,20 @@ interface Props {
 }
 
 const Question = ({ mongoUserId, type, questionDetails }: Props) => {
-  const { theme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
-  const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
+  const [content, setContent] = useState("");
 
   const parsedQuestionDetails =
     type === "edit" ? JSON.parse(questionDetails || "") : "";
+
+  console.log(parsedQuestionDetails?.answers[0]);
+
+  useEffect(() => {
+    setContent(parsedQuestionDetails.content || "");
+  }, [parsedQuestionDetails]);
 
   const groupTags =
     type === "edit"
@@ -72,6 +78,8 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
     setIsSubmitting(true);
     try {
       if (type === "edit") {
+        setLoadingMessage("Publishing your updated question...");
+
         await editQuestion({
           title: values.title,
           content: values.explanation,
@@ -79,15 +87,31 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
           questionId: parsedQuestionDetails._id,
         });
 
-        toast({
-          title: "Question Details Successfully Updated",
-          variant: "success",
-        });
+        const answerId = parsedQuestionDetails?.answers[0];
+
+        setLoadingMessage("CodeLounge AI is finding your answer...");
+
+        if (answerId) {
+          await editCodeLoungeAIAnswer({
+            answerId: answerId,
+            questionId: parsedQuestionDetails._id,
+            question: values.title,
+            questionDescription: values.explanation,
+            path: `/question/${parsedQuestionDetails._id}`,
+          });
+        } else {
+          await createCodeLoungeAIAnswer({
+            question: values.title,
+            questionDescription: values.explanation,
+            questionId: parsedQuestionDetails._id,
+            path: `/question/${parsedQuestionDetails._id}`,
+          });
+        }
 
         //* navigate to question detail page
         router.push(`/question/${parsedQuestionDetails._id}`);
       } else {
-        setLoadingMessage("Pushing your question to the database...");
+        setLoadingMessage("Publishing your question...");
         // Todo: make a async call to your API -> create question
         const question = await createQuestion({
           title: values.title,
@@ -97,14 +121,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
           path: pathname,
         });
 
-        // Todo: contain all form data
-
-        // toast({
-        //   title: `Question has been created`,
-        //   variant: "success",
-        // });
-
-        setLoadingMessage("Our AI is finding your answer...");
+        setLoadingMessage("CodeLounge AI is finding your answer...");
 
         await createCodeLoungeAIAnswer({
           question: question.title,
@@ -209,7 +226,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
                 <FormControl className="mt-3.5">
                   <TextEditor
                     onChange={(content) => field.onChange(content)}
-                    content={JSON.parse("[]")}
+                    content={content}
                   />
                 </FormControl>
                 <FormDescription className="body-regular mt-2.5 text-light-500">
