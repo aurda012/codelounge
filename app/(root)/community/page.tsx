@@ -9,9 +9,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Community | Dev Overflow",
+  title: "Community | CodeLounge",
   description:
-    "Dive into the vibrant community of over 1,000,000 developers on Dev Overflow. Connect, collaborate, and learn from fellow developers worldwide. Join us and be a part of the conversation!",
+    "Dive into the vibrant community of developers on CodeLounge. Connect, collaborate, and learn from fellow developers worldwide. Join us and be a part of the conversation!",
 };
 
 const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
@@ -29,8 +29,8 @@ const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
         <LocalSearchBar
           route="/community"
           iconPosition="left"
-          imgSrc="/assets/icons/search.svg"
-          placeholder="Search for amazing minds"
+          imgSrc="/icons/search.svg"
+          placeholder="Search for developers..."
           otherClasses="flex-1"
         />
         <Filter
@@ -52,7 +52,7 @@ const CommunityPage = async ({ searchParams }: SearchParamsProps) => {
           </div>
         )}
       </section>
-      <div className="mt-10">
+      <div className="mt-10 mb-4">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={result.isNext}

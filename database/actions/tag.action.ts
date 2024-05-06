@@ -11,25 +11,29 @@ import {
   GetTagByIdParams,
   GetTopInteractedTagsParams,
 } from "./shared.types";
+import Interaction from "../models/interaction.model";
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
     await connectToDatabase();
     const { userId } = params;
-    const user = await User.findById(userId);
-
-    if (!user) {
-      throw new Error("User not found");
-    }
 
     // ? Find the interactions for the user and group by tags...
     // Todo Interaction in models so that we can get the tags and the other interaction very easily.
 
-    return [
-      { _id: "1", name: "Tag1" },
-      { _id: "2", name: "Tag2" },
-      { _id: "3", name: "Tag3" },
-    ]; // * for now we can return these fake tags so that we can work on the tags badge in the user card.
+    const topTags = await Interaction.aggregate([
+      { $match: { user: userId } },
+      { $unwind: "$tags" },
+      { $group: { _id: "$tags", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 3 },
+    ]);
+
+    const tagIds = topTags.map((tag: any) => tag._id);
+
+    const tags = await Tag.find({ _id: { $in: tagIds } }).select("_id name");
+
+    return JSON.parse(JSON.stringify(tags));
   } catch (error) {
     console.log(error);
     throw error;
