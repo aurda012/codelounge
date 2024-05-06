@@ -13,7 +13,7 @@ import { ITag } from "@/database/models/tag.model";
 import { getQuestionById } from "@/database/actions/question.action";
 import { getUserById } from "@/database/actions/user.action";
 import { getFormattedNumber, getTimestamp, slugify } from "@/lib/utils";
-import { URLProps } from "@/types";
+import { URLPropsSlug } from "@/types";
 import { addKeywords } from "@/constants/metadata";
 import ReadTextEditor from "@/components/editor/ReadTextEditor";
 import NoResult from "@/components/shared/NoResult";
@@ -21,7 +21,7 @@ import NoResult from "@/components/shared/NoResult";
 const QuestionDetailPage = async ({
   params: { slug },
   searchParams,
-}: URLProps) => {
+}: URLPropsSlug) => {
   const [id, title] = slug;
   if (id.length !== 24) {
     return (

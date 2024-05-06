@@ -52,8 +52,6 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
   const parsedQuestionDetails =
     type === "edit" ? JSON.parse(questionDetails || "") : "";
 
-  console.log(parsedQuestionDetails?.answers[0]);
-
   useEffect(() => {
     setContent(parsedQuestionDetails.content || "");
   }, [parsedQuestionDetails]);

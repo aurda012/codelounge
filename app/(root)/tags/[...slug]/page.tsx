@@ -9,12 +9,15 @@ import { TagQuestionsFilter } from "@/constants/filters";
 import { addKeywords } from "@/constants/metadata";
 import { getQuestionsByTagId, getTagById } from "@/database/actions/tag.action";
 import { slugify } from "@/lib/utils";
-import { URLProps } from "@/types";
+import { URLPropsSlug } from "@/types";
 import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-const TagDetailPage = async ({ params: { slug }, searchParams }: URLProps) => {
+const TagDetailPage = async ({
+  params: { slug },
+  searchParams,
+}: URLPropsSlug) => {
   const [id, title] = slug;
   if (id.length !== 24) {
     return (
