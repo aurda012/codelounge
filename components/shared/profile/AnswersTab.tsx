@@ -1,8 +1,8 @@
 import { getUserAnswers } from "@/database/actions/user.action";
 import { SearchParamsProps } from "@/types";
-import AnswerCard from "../cards/AnswerCard";
-import NoResult from "./NoResult";
-import Pagination from "./Pagination";
+import AnswerCard from "../../cards/AnswerCard";
+import NoResult from "../NoResult";
+import Pagination from "../Pagination";
 
 interface AnswersTabProps extends SearchParamsProps {
   userId: string;
@@ -44,7 +44,7 @@ const AnswersTab = async ({
           />
         )}
       </div>
-      <div className="mt-10">
+      <div className="mt-10 mb-4">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={isNextAnswer}

@@ -1,7 +1,7 @@
-import AnswersTab from "@/components/shared/AnswersTab";
-import ProfileLink from "@/components/shared/ProfileLink";
-import QuestionsTab from "@/components/shared/QuestionsTab";
-import Stats from "@/components/shared/Stats";
+import AnswersTab from "@/components/shared/profile/AnswersTab";
+import ProfileLink from "@/components/shared/profile/ProfileLink";
+import QuestionsTab from "@/components/shared/profile/QuestionsTab";
+import Stats from "@/components/shared/profile/Stats";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserById, getUserInfo } from "@/database/actions/user.action";
