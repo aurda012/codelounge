@@ -1,4 +1,5 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
+import NextTopLoader from "nextjs-toploader";
 import { Inter, Space_Grotesk as SpaceGrotesk } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import React from "react";
@@ -17,6 +18,30 @@ const spaceGrotesk = SpaceGrotesk({
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-spaceGrotesk",
 });
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${inter.variable} ${spaceGrotesk.variable} custom-scrollbar`}
+        suppressHydrationWarning
+      >
+        <ThemeProvider attribute="class" defaultTheme="dark">
+          <NextTopLoader
+            showSpinner={false}
+            color="#1FA2FF"
+            shadow="0 0 10px #1FA2FF,0 0 5px #1FA2FF"
+          />
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
 
 export const metadata: Metadata = {
   generator: "CodeLounge",
@@ -75,29 +100,3 @@ export const metadata: Metadata = {
   },
   category: "software development",
 };
-
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} ${spaceGrotesk.variable} custom-scrollbar`}
-        suppressHydrationWarning={true}
-      >
-        <ThemeProvider attribute="class" defaultTheme="dark">
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  );
-}

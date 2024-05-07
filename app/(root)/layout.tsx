@@ -1,10 +1,14 @@
-import DarkModeSwitcher from "@/components/shared/dark-mode-switcher";
-import NavBar from "@/components/shared/navbar/NavBar";
-import LeftSideBar from "@/components/shared/sidebar/LeftSideBar";
-import RightSideBar from "@/components/shared/sidebar/RightSideBar";
-import { Toaster } from "@/components/ui/toaster";
-import { ClerkProvider } from "@clerk/nextjs";
 import { ReactNode } from "react";
+import { ClerkProvider } from "@clerk/nextjs";
+import dynamic from "next/dynamic";
+const NavBar = dynamic(() => import("@/components/shared/navbar/NavBar"));
+const LeftSideBar = dynamic(
+  () => import("@/components/shared/sidebar/LeftSideBar")
+);
+const RightSideBar = dynamic(
+  () => import("@/components/shared/sidebar/RightSideBar")
+);
+import { Toaster } from "@/components/ui/toaster";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (

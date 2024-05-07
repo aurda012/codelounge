@@ -1,8 +1,10 @@
-import Question from "@/components/forms/QuestionV2";
-import { getUserById } from "@/database/actions/user.action";
-import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
+import { auth } from "@clerk/nextjs/server";
+
+const Question = dynamic(() => import("@/components/forms/QuestionV2"));
+import { getUserById } from "@/database/actions/user.action";
 import { keywords } from "@/constants/metadata";
 
 export const metadata: Metadata = {

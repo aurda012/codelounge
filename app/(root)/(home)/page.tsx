@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
-import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
-import Filter from "@/components/shared/Filter";
-import HomeFilters from "@/components/home/HomeFilters";
-import { Button } from "@/components/ui/button";
-import { HomePageFilters } from "@/constants/filters";
-import QuestionCard from "@/components/cards/QuestionCard";
-import NoResult from "@/components/shared/NoResult";
-import Pagination from "@/components/shared/Pagination";
 
+const LocalSearchBar = dynamic(
+  () => import("@/components/shared/search/LocalSearchBar")
+);
+const Filter = dynamic(() => import("@/components/shared/Filter"));
+const HomeFilters = dynamic(() => import("@/components/home/HomeFilters"));
+const QuestionCard = dynamic(() => import("@/components/cards/QuestionCard"));
+const NoResult = dynamic(() => import("@/components/shared/NoResult"), {
+  ssr: false,
+});
+const Pagination = dynamic(() => import("@/components/shared/Pagination"), {
+  ssr: false,
+});
+import { Button } from "@/components/ui/button";
+
+import { HomePageFilters } from "@/constants/filters";
 import {
   getQuestions,
   getRecommendedQuestions,

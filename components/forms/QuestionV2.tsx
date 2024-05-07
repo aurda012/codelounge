@@ -1,11 +1,29 @@
 "use client";
 
 import { KeyboardEvent, useEffect, useState } from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { usePathname, useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 
+import {
+  createCodeLoungeAIAnswer,
+  editCodeLoungeAIAnswer,
+} from "@/database/actions/answer.action";
+import {
+  createQuestion,
+  editQuestion,
+} from "@/database/actions/question.action";
+import { ITag } from "@/database/models/tag.model";
+import { QuestionSchema } from "@/lib/validations";
+
+const TextEditor = dynamic(() => import("../editor/TextEditor"), {
+  ssr: false,
+});
+const Loading = dynamic(() => import("../shared/Loading"));
+const ShortcutsMenu = dynamic(() => import("../editor/ShortcutsMenu"));
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,24 +35,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-import {
-  createQuestion,
-  editQuestion,
-} from "@/database/actions/question.action";
-import { QuestionSchema } from "@/lib/validations";
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
 import { Badge } from "../ui/badge";
-import { ITag } from "@/database/models/tag.model";
 import { toast } from "../ui/use-toast";
-import TextEditor from "../editor/TextEditor";
-import {
-  createCodeLoungeAIAnswer,
-  editCodeLoungeAIAnswer,
-} from "@/database/actions/answer.action";
-import { Loading } from "../shared/Loading";
-import ShortcutsMenu from "../editor/ShortcutsMenu";
 
 interface Props {
   mongoUserId: string;
@@ -197,6 +199,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
                 </FormLabel>
                 <FormControl className="mt-3.5">
                   <Input
+                    placeholder="Title..."
                     className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border rounded-[8px]"
                     {...field}
                   />

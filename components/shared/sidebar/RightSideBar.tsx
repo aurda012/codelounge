@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 import Image from "next/image";
 import RenderTag from "../RenderTag";
 import { getHotQuestions } from "@/database/actions/question.action";

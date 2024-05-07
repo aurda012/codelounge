@@ -22,3 +22,5 @@ export const Loading = ({ message }: { message: string }) => {
     </div>
   );
 };
+
+export default Loading;
