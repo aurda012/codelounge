@@ -12,10 +12,8 @@ export async function getJobs(params: GetJobsParams) {
       page = 1,
       pageSize = 10,
       filter,
-      location,
       remote,
       wage,
-      skills,
       searchQuery,
     } = params;
 
@@ -37,17 +35,17 @@ export async function getJobs(params: GetJobsParams) {
       (searchQuery || "").toLowerCase(),
       "i"
     );
-    const locationRegExp = new RegExp((location || "").toLowerCase(), "i");
+    // const locationRegExp = new RegExp((location || "").toLowerCase(), "i");
 
     const filteredJobs = allJobs.filter((job: any) => {
       return (
         job &&
-        searchQueryRegExp.test(job.job_title) &&
-        locationRegExp.test(job.job_country) &&
+        (searchQueryRegExp.test(job.job_title) ||
+          searchQueryRegExp.test(job.employer_name) ||
+          searchQueryRegExp.test(job.job_description)) &&
+        // locationRegExp.test(job.job_country) &&
         (!remote || job.job_is_remote === true) &&
-        (!wage ||
-          (job.job_min_salary !== null && job.job_max_salary !== null)) &&
-        (!skills || job.job_required_skills)
+        (!wage || (job.job_min_salary !== null && job.job_max_salary !== null))
       );
     });
 
@@ -73,17 +71,17 @@ export async function getJobs(params: GetJobsParams) {
         break;
     }
 
-    const data = filteredJobs
-      .filter((job: any) =>
-        filterOptions.job_employment_type !== ""
-          ? job.job_employment_type === filterOptions.job_employment_type
-          : true
-      )
-      .slice(skipAmount, skipAmount + pageSize);
+    const allData = filteredJobs.filter((job: any) =>
+      filterOptions.job_employment_type !== ""
+        ? job.job_employment_type === filterOptions.job_employment_type
+        : true
+    );
 
     const totalJobs = allJobs.length;
 
-    const isNext = totalJobs > skipAmount + data.length;
+    const isNext = allData.length > skipAmount + pageSize;
+
+    const data = allData.slice(skipAmount, skipAmount + pageSize);
 
     return { data, isNext };
   } catch (error) {
