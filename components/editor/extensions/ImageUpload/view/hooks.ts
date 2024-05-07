@@ -1,7 +1,7 @@
 import { DragEvent, useCallback, useEffect, useRef, useState } from "react";
 require("dotenv").config();
 import { toast } from "@/components/ui/use-toast";
-import { API } from "@/lib/api";
+import { API, uploadWithImageKit } from "@/lib/api";
 import { randomUUID } from "crypto";
 // import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 // import { Database } from "@/lib/supabase/types"
@@ -28,17 +28,11 @@ export const useUploader = ({
       setLoading(true);
       // console.log("On Upload File", file);
       try {
-        let filePath = "";
-        const id = Math.random().toString(36).substring(0, 18);
         const type = file.type.split("/")[1];
         // console.log({ type });
         const base64 = await convertImageToBase64(file);
-        const results = await imageKitClient.upload({
-          file: base64,
-          fileName: `${id}.${type}`,
-        });
-        // console.log({ results });
-        const url = results.url;
+
+        const url = await uploadWithImageKit(base64, type);
 
         onUpload(url);
       } catch (errPayload: any) {
