@@ -1,11 +1,12 @@
 "use client";
-
-import { SignedIn, UserButton, SignedOut, SignInButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-// import GlobalSearch from "../search/GlobalSearch";
-import MobileNav from "./MobileNav";
+import { SignedIn, UserButton } from "@clerk/nextjs";
+import dynamic from "next/dynamic";
+
+const GlobalSearch = dynamic(() => import("../search/GlobalSearch"));
+const MobileNav = dynamic(() => import("./MobileNav"));
 import NavDarkMode from "./nav-dark-mode";
 
 const NavBar = () => {
@@ -21,12 +22,11 @@ const NavBar = () => {
           alt="DevFlow"
         />
       </Link>
-      {/* <GlobalSearch /> */}
+      <GlobalSearch />
       <div className="flex-between gap-5">
         <NavDarkMode />
         <SignedIn>
           <UserButton
-            afterSignOutUrl="/"
             appearance={{
               elements: {
                 avatarBox: "h-9 w-9",
