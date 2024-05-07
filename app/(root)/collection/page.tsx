@@ -1,19 +1,21 @@
-import QuestionCard from "@/components/cards/QuestionCard";
-import Filter from "@/components/shared/Filter";
-import NoResult from "@/components/shared/NoResult";
-import Pagination from "@/components/shared/Pagination";
-import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
-import { QuestionFilters } from "@/constants/filters";
-import { getSavedQuestions } from "@/database/actions/user.action";
-import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 
-export const metadata: Metadata = {
-  title: "Collection | CodeLounge",
-  description:
-    "Explore a personalized collection of your saved questions on CodeLounge. Join our community of developers and access your curated repository of valuable insights and solutions.",
-};
+import { getSavedQuestions } from "@/database/actions/user.action";
+
+const QuestionCard = dynamic(() => import("@/components/cards/QuestionCard"));
+const Filter = dynamic(() => import("@/components/shared/Filter"));
+const LocalSearchBar = dynamic(
+  () => import("@/components/shared/search/LocalSearchBar")
+);
+const NoResult = dynamic(() => import("@/components/shared/NoResult"));
+const Pagination = dynamic(() => import("@/components/shared/Pagination"), {
+  ssr: false,
+});
+
+import { QuestionFilters } from "@/constants/filters";
+import { SearchParamsProps } from "@/types";
 
 export default async function CollectionPage({
   searchParams,
@@ -80,3 +82,9 @@ export default async function CollectionPage({
     </>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Collection | CodeLounge",
+  description:
+    "Explore a personalized collection of your saved questions on CodeLounge. Join our community of developers and access your curated repository of valuable insights and solutions.",
+};

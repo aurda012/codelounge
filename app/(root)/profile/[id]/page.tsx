@@ -1,17 +1,27 @@
-import AnswersTab from "@/components/shared/profile/AnswersTab";
-import ProfileLink from "@/components/shared/profile/ProfileLink";
-import QuestionsTab from "@/components/shared/profile/QuestionsTab";
-import Stats from "@/components/shared/profile/Stats";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getUserById, getUserInfo } from "@/database/actions/user.action";
-import { getActualDateAndMonth } from "@/lib/utils";
-import { URLProps } from "@/types";
 import { SignedIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata, ResolvingMetadata } from "next";
+import dynamic from "next/dynamic";
+
+import { getUserById, getUserInfo } from "@/database/actions/user.action";
+
+const AnswersTab = dynamic(
+  () => import("@/components/shared/profile/AnswersTab")
+);
+const ProfileLink = dynamic(
+  () => import("@/components/shared/profile/ProfileLink")
+);
+const QuestionsTab = dynamic(
+  () => import("@/components/shared/profile/QuestionsTab")
+);
+const Stats = dynamic(() => import("@/components/shared/profile/Stats"));
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { getActualDateAndMonth } from "@/lib/utils";
+import { URLProps } from "@/types";
 
 const ProfileDetailPage = async ({
   params: { id },

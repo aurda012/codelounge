@@ -1,30 +1,21 @@
-import Filter from "@/components/shared/Filter";
-import NoResult from "@/components/shared/NoResult";
-import Pagination from "@/components/shared/Pagination";
-import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
-import { TagFilters } from "@/constants/filters";
-import { getAllTags } from "@/database/actions/tag.action";
-import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { slugify } from "@/lib/utils";
+import dynamic from "next/dynamic";
 
-export const metadata: Metadata = {
-  title: "Tags | CodeLounge",
-  description:
-    "Explore a diverse range of tags added to questions. From popular frameworks to specific topics.",
-  openGraph: {
-    title: "Tags | CodeLounge",
-    description:
-      "Explore a diverse range of tags added to questions. From popular frameworks to specific topics.",
-    url: "https://codelounge.vercel.app/tags",
-  },
-  twitter: {
-    title: "Tags | CodeLounge",
-    description:
-      "Explore a diverse range of tags added to questions. From popular frameworks to specific topics.",
-  },
-};
+import { getAllTags } from "@/database/actions/tag.action";
+
+const Filter = dynamic(() => import("@/components/shared/Filter"));
+const NoResult = dynamic(() => import("@/components/shared/NoResult"));
+const LocalSearchBar = dynamic(
+  () => import("@/components/shared/search/LocalSearchBar")
+);
+const Pagination = dynamic(() => import("@/components/shared/Pagination"), {
+  ssr: false,
+});
+
+import { TagFilters } from "@/constants/filters";
+import { SearchParamsProps } from "@/types";
+import { slugify } from "@/lib/utils";
 
 const TagsPage = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
@@ -95,3 +86,20 @@ const TagsPage = async ({ searchParams }: SearchParamsProps) => {
 };
 
 export default TagsPage;
+
+export const metadata: Metadata = {
+  title: "Tags | CodeLounge",
+  description:
+    "Explore a diverse range of tags added to questions. From popular frameworks to specific topics.",
+  openGraph: {
+    title: "Tags | CodeLounge",
+    description:
+      "Explore a diverse range of tags added to questions. From popular frameworks to specific topics.",
+    url: "https://codelounge.vercel.app/tags",
+  },
+  twitter: {
+    title: "Tags | CodeLounge",
+    description:
+      "Explore a diverse range of tags added to questions. From popular frameworks to specific topics.",
+  },
+};

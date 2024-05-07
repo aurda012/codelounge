@@ -1,12 +1,20 @@
-import UserCard from "@/components/cards/UserCard";
-import Filter from "@/components/shared/Filter";
-import Pagination from "@/components/shared/Pagination";
-import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
-import { UserFilters } from "@/constants/filters";
-import { getAllUsers } from "@/database/actions/user.action";
-import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
+
+import { getAllUsers } from "@/database/actions/user.action";
+
+const UserCard = dynamic(() => import("@/components/cards/UserCard"));
+const Filter = dynamic(() => import("@/components/shared/Filter"));
+const LocalSearchBar = dynamic(
+  () => import("@/components/shared/search/LocalSearchBar")
+);
+const Pagination = dynamic(() => import("@/components/shared/Pagination"), {
+  ssr: false,
+});
+
+import { UserFilters } from "@/constants/filters";
+import { SearchParamsProps } from "@/types";
 
 export const metadata: Metadata = {
   title: "Community | CodeLounge",

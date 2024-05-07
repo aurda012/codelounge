@@ -6,7 +6,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import TaskList from "@tiptap/extension-task-list";
 import TextAlign from "@tiptap/extension-text-align";
 import Typography from "@tiptap/extension-typography";
-import FileHandler from "@tiptap-pro/extension-file-handler";
+// import FileHandler from "@tiptap-pro/extension-file-handler";
 import History from "@tiptap/extension-history";
 import { lowlight } from "lowlight";
 import { CustomTaskItem } from "./CustomTaskItem/CustomTaskItem";
@@ -15,7 +15,6 @@ import { ImageBlock } from "./ImageBlock";
 import { Link } from "./Link";
 // import { IndentExtension } from "./Indent";
 import { IndentExtension } from "./Indent/indent-v2";
-import API from "@/lib/api";
 import { Selection } from "./Selection";
 
 export const ExtensionKit = [
@@ -96,29 +95,29 @@ export const ExtensionKit = [
   ImageUpload,
   Image,
   ImageBlock,
-  FileHandler.configure({
-    allowedMimeTypes: ["image/png", "image/jpeg", "image/gif", "image/webp"],
-    onDrop: (currentEditor, files, pos) => {
-      files.forEach(async () => {
-        const url = await API.uploadImage();
+  // FileHandler.configure({
+  //   allowedMimeTypes: ["image/png", "image/jpeg", "image/gif", "image/webp"],
+  //   onDrop: (currentEditor, files, pos) => {
+  //     files.forEach(async () => {
+  //       const url = await API.uploadImage();
 
-        currentEditor.chain().setImageBlockAt({ pos, src: url }).focus().run();
-      });
-    },
-    onPaste: (currentEditor, files) => {
-      files.forEach(async (file) => {
-        const url = await API.uploadImage();
+  //       currentEditor.chain().setImageBlockAt({ pos, src: url }).focus().run();
+  //     });
+  //   },
+  //   onPaste: (currentEditor, files) => {
+  //     files.forEach(async (file) => {
+  //       const url = await API.uploadImage();
 
-        return currentEditor
-          .chain()
-          .setImageBlockAt({
-            pos: currentEditor.state.selection.anchor,
-            src: url,
-          })
-          .focus()
-          .run();
-      });
-    },
-  }),
+  //       return currentEditor
+  //         .chain()
+  //         .setImageBlockAt({
+  //           pos: currentEditor.state.selection.anchor,
+  //           src: url,
+  //         })
+  //         .focus()
+  //         .run();
+  //     });
+  //   },
+  // }),
   Selection,
 ];

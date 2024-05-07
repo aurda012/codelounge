@@ -35,6 +35,8 @@ export default function RootLayout({
             showSpinner={false}
             color="#1FA2FF"
             shadow="0 0 10px #1FA2FF,0 0 5px #1FA2FF"
+            crawlSpeed={150}
+            speed={150}
           />
           {children}
         </ThemeProvider>

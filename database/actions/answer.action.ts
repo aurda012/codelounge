@@ -73,7 +73,7 @@ export async function createCodeLoungeAIAnswer(
 export async function editCodeLoungeAIAnswer(
   params: EditCodeLoungeAIAnswerParams
 ) {
-  const { answerId, question, questionDescription } = params;
+  const { answerId, question, questionDescription, path } = params;
 
   const answer = await Answer.findById(answerId);
 
@@ -104,6 +104,8 @@ export async function editCodeLoungeAIAnswer(
     answer.createdAt = new Date();
 
     await answer.save();
+
+    revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;

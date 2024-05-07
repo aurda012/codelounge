@@ -1,21 +1,21 @@
-import Filter from "@/components/shared/Filter";
-import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
-import JobFilters from "@/components/shared/jobs/Filters";
-import NoResult from "@/components/shared/NoResult";
-import Pagination from "@/components/shared/Pagination";
-import JobCard from "@/components/cards/JobCard";
-
-import { JobPageFilters } from "@/constants/filters";
-
-import type { SearchParamsProps } from "@/types";
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
+
 import { getJobs } from "@/database/actions/job.action";
 
-export const metadata: Metadata = {
-  title: "Jobs | CodeLounge",
-  description:
-    "Find your next job in as a software engineer. Search for jobs by title, location, and more.",
-};
+const LocalSearchBar = dynamic(
+  () => import("@/components/shared/search/LocalSearchBar")
+);
+const Filter = dynamic(() => import("@/components/shared/Filter"));
+const JobFilters = dynamic(() => import("@/components/shared/jobs/Filters"));
+const JobCard = dynamic(() => import("@/components/cards/JobCard"));
+const NoResult = dynamic(() => import("@/components/shared/NoResult"));
+const Pagination = dynamic(() => import("@/components/shared/Pagination"), {
+  ssr: false,
+});
+
+import { JobPageFilters } from "@/constants/filters";
+import type { SearchParamsProps } from "@/types";
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getJobs({
@@ -96,3 +96,9 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
 };
 
 export default Page;
+
+export const metadata: Metadata = {
+  title: "Jobs | CodeLounge",
+  description:
+    "Find your next job in as a software engineer. Search for jobs by title, location, and more.",
+};

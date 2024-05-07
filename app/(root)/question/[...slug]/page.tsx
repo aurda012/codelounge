@@ -3,20 +3,25 @@ import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import dynamic from "next/dynamic";
 
-import Metric from "@/components/shared/Metric";
-import Votes from "@/components/shared/Votes";
-import RenderTag from "@/components/shared/RenderTag";
-import AllAnswers from "@/components/shared/AllAnswers";
-import Answer from "@/components/forms/AnswerV2";
-import { ITag } from "@/database/models/tag.model";
 import { getQuestionById } from "@/database/actions/question.action";
 import { getUserById } from "@/database/actions/user.action";
+import { ITag } from "@/database/models/tag.model";
+
+const Metric = dynamic(() => import("@/components/shared/Metric"));
+const Votes = dynamic(() => import("@/components/shared/Votes"));
+const RenderTag = dynamic(() => import("@/components/shared/RenderTag"));
+const AllAnswers = dynamic(() => import("@/components/shared/AllAnswers"));
+const ReadTextEditor = dynamic(
+  () => import("@/components/editor/ReadTextEditor")
+);
+const NoResult = dynamic(() => import("@/components/shared/NoResult"));
+const Answer = dynamic(() => import("@/components/forms/AnswerV2"));
+
 import { getFormattedNumber, getTimestamp, slugify } from "@/lib/utils";
 import { URLPropsSlug } from "@/types";
 import { addKeywords } from "@/constants/metadata";
-import ReadTextEditor from "@/components/editor/ReadTextEditor";
-import NoResult from "@/components/shared/NoResult";
 
 const QuestionDetailPage = async ({
   params: { slug },

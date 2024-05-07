@@ -3,16 +3,11 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { auth } from "@clerk/nextjs/server";
 
-const Question = dynamic(() => import("@/components/forms/QuestionV2"));
 import { getUserById } from "@/database/actions/user.action";
-import { keywords } from "@/constants/metadata";
 
-export const metadata: Metadata = {
-  title: "Ask a Question | CodeLounge",
-  description:
-    "Ready to get answers? Ask your coding questions and get help from the CodeLounge AI and the developer community",
-  keywords: keywords,
-};
+const Question = dynamic(() => import("@/components/forms/QuestionV2"));
+
+import { keywords } from "@/constants/metadata";
 
 const AskQuestionPage = async () => {
   const { userId } = auth();
@@ -32,3 +27,10 @@ const AskQuestionPage = async () => {
 };
 
 export default AskQuestionPage;
+
+export const metadata: Metadata = {
+  title: "Ask a Question | CodeLounge",
+  description:
+    "Ready to get answers? Ask your coding questions and get help from the CodeLounge AI and the developer community",
+  keywords: keywords,
+};

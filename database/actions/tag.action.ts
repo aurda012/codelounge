@@ -26,7 +26,7 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
       { $unwind: "$tags" },
       { $group: { _id: "$tags", count: { $sum: 1 } } },
       { $sort: { count: -1 } },
-      { $limit: 3 },
+      { $limit: 2 },
     ]);
 
     const tagIds = topTags.map((tag: any) => tag._id);

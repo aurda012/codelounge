@@ -1,14 +1,15 @@
 "use client";
 
-import { createAnswer } from "@/database/actions/answer.action";
-import { AnswerSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { convert } from "html-to-text";
 import { z } from "zod";
+import dynamic from "next/dynamic";
+
+import { createAnswer } from "@/database/actions/answer.action";
+
+const TextEditor = dynamic(() => import("../editor/TextEditor"));
 import { Button } from "../ui/button";
 import {
   Form,
@@ -18,7 +19,8 @@ import {
   FormMessage,
 } from "../ui/form";
 import { toast } from "../ui/use-toast";
-import TextEditor from "../editor/TextEditor";
+
+import { AnswerSchema } from "@/lib/validations";
 
 interface Props {
   authorId: string;

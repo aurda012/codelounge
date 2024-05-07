@@ -1,8 +1,11 @@
-import Question from "@/components/forms/QuestionV2";
-import { getQuestionById } from "@/database/actions/question.action";
-import { getUserById } from "@/database/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
 import { Metadata, ResolvingMetadata } from "next";
+import dynamic from "next/dynamic";
+
+import { getQuestionById } from "@/database/actions/question.action";
+import { getUserById } from "@/database/actions/user.action";
+
+const Question = dynamic(() => import("@/components/forms/QuestionV2"));
 
 interface Props {
   params: { id: string };

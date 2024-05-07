@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
+import dynamic from "next/dynamic";
 
 const LocalSearchBar = dynamic(
   () => import("@/components/shared/search/LocalSearchBar")
@@ -9,9 +9,7 @@ const LocalSearchBar = dynamic(
 const Filter = dynamic(() => import("@/components/shared/Filter"));
 const HomeFilters = dynamic(() => import("@/components/home/HomeFilters"));
 const QuestionCard = dynamic(() => import("@/components/cards/QuestionCard"));
-const NoResult = dynamic(() => import("@/components/shared/NoResult"), {
-  ssr: false,
-});
+const NoResult = dynamic(() => import("@/components/shared/NoResult"));
 const Pagination = dynamic(() => import("@/components/shared/Pagination"), {
   ssr: false,
 });

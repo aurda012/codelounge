@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { usePathname, useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 import {
   createCodeLoungeAIAnswer,

@@ -1,18 +1,26 @@
-import QuestionCard from "@/components/cards/QuestionCard";
-import Filter from "@/components/shared/Filter";
-import NoResult from "@/components/shared/NoResult";
-import Pagination from "@/components/shared/Pagination";
-import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
-import TagFilters from "@/components/tag/TagFilters";
-import { Button } from "@/components/ui/button";
-import { TagQuestionsFilter } from "@/constants/filters";
-import { addKeywords } from "@/constants/metadata";
-import { getQuestionsByTagId, getTagById } from "@/database/actions/tag.action";
-import { slugify } from "@/lib/utils";
-import { URLPropsSlug } from "@/types";
 import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import dynamic from "next/dynamic";
+
+import { getQuestionsByTagId, getTagById } from "@/database/actions/tag.action";
+
+const LocalSearchBar = dynamic(
+  () => import("@/components/shared/search/LocalSearchBar")
+);
+const QuestionCard = dynamic(() => import("@/components/cards/QuestionCard"));
+const Filter = dynamic(() => import("@/components/shared/Filter"));
+const TagFilters = dynamic(() => import("@/components/tag/TagFilters"));
+const NoResult = dynamic(() => import("@/components/shared/NoResult"));
+const Pagination = dynamic(() => import("@/components/shared/Pagination"), {
+  ssr: false,
+});
+import { Button } from "@/components/ui/button";
+
+import { TagQuestionsFilter } from "@/constants/filters";
+import { addKeywords } from "@/constants/metadata";
+import { slugify } from "@/lib/utils";
+import { URLPropsSlug } from "@/types";
 
 const TagDetailPage = async ({
   params: { slug },
@@ -108,7 +116,7 @@ export default TagDetailPage;
 
 export async function generateMetadata({
   params: { slug },
-}: URLProps): Promise<Metadata> {
+}: URLPropsSlug): Promise<Metadata> {
   const [id] = slug;
   // not found metadata
   const notFound = {
