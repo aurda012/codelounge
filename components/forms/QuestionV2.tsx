@@ -110,6 +110,11 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
 
         //* navigate to question detail page
         router.push(`/question/${parsedQuestionDetails._id}`);
+
+        toast({
+          title: `CodeLounge AI has answered your question!`,
+          variant: "success",
+        });
       } else {
         setLoadingMessage("Publishing your question...");
         // Todo: make a async call to your API -> create question
@@ -132,16 +137,21 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
 
         //* navigate to home page
         router.push(`/question/${question._id}`);
+
+        toast({
+          title: `CodeLounge AI has answered your question!`,
+          variant: "success",
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      toast({
+        title: `There seems to be a problem! ${error.message}`,
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
       setLoadingMessage("");
-      toast({
-        title: `CodeLounge AI has answered your question!`,
-        variant: "success",
-      });
     }
   }
 

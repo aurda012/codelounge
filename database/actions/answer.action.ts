@@ -14,6 +14,7 @@ import {
 } from "./shared.types";
 import { convert } from "html-to-text";
 import { formatChatGPTResponseToHtml } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
 
 interface CreateCodeLoungeAIAnswerParams {
   questionId: string;
@@ -316,14 +317,22 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
 
 export async function deleteAnswer(params: DeleteAnswerParams) {
   try {
+    const { userId } = auth();
+
     await connectToDatabase();
 
-    const { answerId, path, questionId } = params;
+    const user = await User.findOne({ clerkId: userId });
+
+    const { answerId, path } = params;
 
     const answer = await Answer.findById(answerId);
 
     if (!answer) {
       throw new Error("Answer not found");
+    }
+
+    if (answer.author.toString() !== user._id.toString()) {
+      throw new Error("You are not authorized to delete this answer.");
     }
 
     await Answer.deleteOne({ _id: answerId });

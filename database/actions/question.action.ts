@@ -17,6 +17,7 @@ import {
 import Answer from "@/database/models/answer.model";
 import Interaction from "@/database/models/interaction.model";
 import mongoose, { FilterQuery } from "mongoose";
+import { auth } from "@clerk/nextjs/server";
 const ObjectId = mongoose.Types.ObjectId;
 
 export async function createQuestion(params: CreateQuestionParams) {
@@ -270,7 +271,11 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
 
 export async function deleteQuestion(params: DeleteQuestionParams) {
   try {
+    const { userId } = auth();
+
     await connectToDatabase();
+
+    const user = await User.findOne({ clerkId: userId });
 
     const { questionId, path } = params;
 
@@ -278,6 +283,10 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
       "author",
       "_id reputation"
     );
+
+    if (deletedQuestion.author.toString() !== user._id.toString()) {
+      throw new Error("You are not authorized to delete this question.");
+    }
 
     await Question.deleteOne({ _id: questionId });
     await Answer.deleteMany({ question: questionId });
@@ -300,7 +309,11 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
 
 export async function editQuestion(params: EditQuestionParams) {
   try {
+    const { userId } = auth();
+
     await connectToDatabase();
+
+    const user = await User.findOne({ clerkId: userId });
 
     const { content, path, title, questionId } = params;
 
@@ -308,6 +321,10 @@ export async function editQuestion(params: EditQuestionParams) {
 
     if (!question) {
       throw new Error("Question not found");
+    }
+
+    if (question.author.toString() !== user._id.toString()) {
+      throw new Error("You are not authorized to edit this question.");
     }
 
     question.title = title;
